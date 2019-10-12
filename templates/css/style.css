@@ -297,11 +297,13 @@ progress {
     margin: 20px 0 0 30px;
 }
 .project-name {
+    font-family: 'Nanum Square';
     text-align: left;
     font-size: 36px;
     font-weight: bold;
 }
 .project-date {
+    font-family: 'Nanum Square';
     margin-top: 8px;
     text-align: left;
     font-size: 14px;
@@ -345,4 +347,145 @@ progress {
     width: 1078px;
     border: 1px solid gray;
     background-color: white;
+}
+.history-grid {
+    display: grid;
+    grid-template-columns: 539px 1fr;
+}
+
+.history-information {
+    margin: 10px 0 0 20px;
+}
+.history-name {
+    font-family: 'Nanum Square';
+    text-align: left;
+    font-size: 36px;
+    font-weight: bold;
+}
+.history-date {
+    font-family: 'Nanum Square';
+    margin-left: 4px;
+    text-align: left;
+    font-size: 14px;
+    margin-top: 3px;
+}
+.history-date span {
+    margin-right: 25px;
+}
+
+.history-user-image {
+    margin: 12px 12px 0 0;
+    text-align: right;
+}
+.history-user-image img {
+    display: inline;
+    height: 40px;
+    width: 40px;
+    margin-left: 15px;
+}
+.history-second-grid {
+    display: grid;
+    grid-template-columns: 800px 1fr;
+    margin-top: 15px;
+}
+.history-project-stack {
+    font-family: 'Nanum Square';
+    text-align: left;
+    margin: 20px 0 0 20px;
+}
+.history-project-stack span {
+    margin-right: 15px;
+}
+.rise-fall {
+    margin-right: 20px;
+    text-align: right;
+}
+.plus-minus {
+    font-family: 'Nanum Square';
+    font-size: 36px;
+    color: green;
+}
+.score {
+    font-family: 'Nanum Square';
+    font-size: 36px;
+    font-weight: bold;
+}
+
+.container2 {
+    margin: 0 auto;
+}
+.todo-update {
+    padding-top: 100px;
+    margin-left: 210px;
+    width: 1460px;
+    height: 350px;
+}
+.todo-update-date {
+    font-family: "Nanum Square";
+    text-align: left;
+    padding-left: 190px;
+    height: 26px;
+}
+.todo-box {
+    width: 1460px;
+    height: 324px;
+    display: grid;
+    grid-template-columns: 180px 1fr;
+}
+.project-member {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    grid-template-rows: 90px 90px 3fr;
+}
+.project-member img {
+    heigth: 80px;
+    width: 80px;
+    margin-right: 10px;
+}
+.todo-main-box {
+    font-family: "Nanum Square";
+    background-color: white;
+    width: 1280px;
+    height: 324px;
+}
+.todo-message {
+    margin: 30px 0 0 30px;
+    text-align: left;
+    font-size: 34px;
+}
+.bold {
+    font-weight: bold;
+    font-size: 40px;
+}
+
+.project-apply {
+    padding-top: 100px;
+    margin-left: 210px;
+    width: 1460px;
+    height: 324px;
+}
+.apply-main-box {
+    font-family: "Nanum Square";
+    margin-left: 180px;
+    background-color: white;
+    width: 1280px;
+    height: 324px;
+}
+.apply-grid {
+    display: grid;
+    grid-template-columns: 980px 1fr;
+}
+.apply-message {
+    margin: 30px 0 0 30px;
+    text-align: left;
+    font-size: 34px;
+}
+.apply-grid button {
+    border: none;
+    background-color: white;
+    margin-top: 50px;
+}
+.apply-button {
+    height: 80px;
+    width: 240px;
 }
