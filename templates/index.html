@@ -35,7 +35,11 @@
                 </div>
             </header>
             <main id="main">
-                {% include 'main.html' %}
+                {% if is_user_logged_in %}
+                    {% include 'main.html' %}
+                {% else %}
+                    <a href="/user/authorize" class="btn btn-primary">GitHub로 로그인</a>
+                {% endif %}
             </main>
         </div>
     </body>

@@ -17,7 +17,7 @@ db = mongo_client.circruit
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    return render_template("index.html", is_user_logged_in=github.authorized)
 
 
 @app.route("/feed")
