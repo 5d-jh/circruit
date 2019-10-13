@@ -2,7 +2,7 @@ from flask import Blueprint, request, render_template, redirect, url_for
 from flask_dance.contrib.github import github
 from modules.api_func import get_gh_user_info
 
-def user_blueprint(db):
+def project_blueprint(db):
     blueprint = Blueprint('user', __name__)
 
     @blueprint.route("/create", methods=['GET', 'POST'])
@@ -10,7 +10,7 @@ def user_blueprint(db):
         user = get_gh_user_info()
 
         if request.method == 'GET':
-            return render_template("user/create_user.html", username=user["login"])
+            return render_template("create_user.html", username=user["login"])
 
         db.users.insert_one({
             "username": user["login"],
@@ -47,6 +47,7 @@ def user_blueprint(db):
 
     @blueprint.route("/login")
     def user_login_view():
-        return render_template("user/login.html")
+        print("LOGIN")
+        return render_template("login.html")
 
     return blueprint

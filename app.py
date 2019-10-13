@@ -3,6 +3,7 @@ from flask import Flask, render_template, redirect, url_for, request
 from flask_dance.contrib.github import make_github_blueprint, github
 from pymongo import MongoClient
 from modules.user import user_blueprint
+from modules.api_func import get_gh_user_info
 
 app = Flask(__name__)
 app.secret_key = "NEA#@WREBFsdfb{"
@@ -16,17 +17,11 @@ app.register_blueprint(blueprint, url_prefix="/login")
 mongo_client = MongoClient(os.environ["DATABASE_URL"])
 db = mongo_client.circruit
 
-def get_gh_user_info():
-    resp = github.get("/user")
-    if resp.ok:
-        return resp.json()
-    else:
-        None
-
 @app.before_request
 def before_request():
-    if not github.authorized:
-        redirect("/user/login")
+    pass
+    # if not github.authorized:
+    #     return render_template("login.html")
     
 @app.route("/")
 def index():
@@ -40,15 +35,15 @@ def my_page():
     user = get_gh_user_info()
 
     return render_template(
-        "main.html",
+        "user/mypage.html",
         username = user["login"] if user else None
     )
 
 @app.route("/feed")
 def feed():
-    return render_template("feed.html")
+    return render_template("user/feed.html")
 
-app.register_blueprint(user_blueprint(db))
+app.register_blueprint(user_blueprint(db), url_prefix="/user")
 
 if __name__ == "main":
     app.run(debug=True)
