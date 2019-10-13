@@ -11,7 +11,7 @@ def get_gh_user_info():
 def user_blueprint(db):
     blueprint = Blueprint('user', __name__)
 
-    @blueprint.route("/create", methods=['GET', 'POST'])
+    @blueprint.route("/user/create", methods=['GET', 'POST'])
     def create_user():
         user = get_gh_user_info()
 
@@ -28,7 +28,7 @@ def user_blueprint(db):
         return redirect("/feed")
 
 
-    @blueprint.route("/authorize")
+    @blueprint.route("/user/authorize")
     def authorize():
         if not github.authorized:
             #깃허브 승인 페이지로 이동
@@ -50,5 +50,10 @@ def user_blueprint(db):
 
         #기존 사용자라면 피드로 이동
         return redirect("/feed")
+
+    @blueprint.route("/user/login")
+    def user_login_view():
+        print("LOGIN")
+        return render_template("login.html")
 
     return blueprint

@@ -26,15 +26,21 @@ def get_gh_user_info():
 @app.before_request
 def before_request():
     if not github.authorized:
-        redirect("/")
+        redirect("/user/login")
     
 @app.route("/")
 def index():
+    if not github.authorized:
+        return redirect("/user/login")
+
+    return redirect("/mypage")
+
+@app.route("/mypage")
+def my_page():
     user = get_gh_user_info()
 
     return render_template(
         "main.html",
-        is_user_logged_in = github.authorized,
         username = user["login"] if user else None
     )
 
@@ -42,7 +48,7 @@ def index():
 def feed():
     return render_template("feed.html")
 
-app.register_blueprint(user_blueprint(db), url_prefix="/user")
+app.register_blueprint(user_blueprint(db))
 
 if __name__ == "main":
     app.run(debug=True)
