@@ -15,9 +15,20 @@ app.register_blueprint(blueprint, url_prefix="/login")
 mongo_client = MongoClient(os.environ["DATABASE_URL"])
 db = mongo_client.circruit
 
+def get_gh_user_info():
+    resp = github.get("/user")
+    assert resp.ok
+    return resp.json()
+
 @app.route("/")
 def index():
-    return render_template("index.html", is_user_logged_in=github.authorized)
+    user = get_gh_user_info()
+
+    return render_template(
+        "main.html",
+        is_user_logged_in = github.authorized,
+        username = user["login"]
+    )
 
 
 @app.route("/feed")
@@ -27,9 +38,7 @@ def feed():
 
 @app.route("/user/create", methods=['GET', 'POST'])
 def create_user():
-    resp = github.get("/user")
-    assert resp.ok
-    user = resp.json()
+    user = get_gh_user_info()
 
     if request.method == 'GET':
         return render_template("create_user.html", username=user["login"])
@@ -51,9 +60,7 @@ def authorize():
         return redirect(url_for("github.login"))
 
     #승인 후 다시 이 페이지로 돌아와서 깃허브 유저 정보 획득
-    resp = github.get("/user")
-    assert resp.ok
-    user = resp.json()
+    user = get_gh_user_info()
 
     users_collection = db.users
 

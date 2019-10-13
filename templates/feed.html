@@ -1,16 +1,52 @@
-<div class="container2">
-    <div class="todo-update">
+{% extends "layout.html" %}
+
+{% block main_content %}
+    <div class="container2">
+        <div class="todo-update">
+            <div class="todo-update-date">
+                <span>2019-10-02</span>
+            </div>
+            <div class="todo-box">
+                <div class="project-member">
+                    <img src="static/img/user-profile-image.png">
+                    <img src="static/img/user-profile-image.png">
+                    <img src="static/img/user-profile-image.png">
+                    <img src="static/img/user-profile-image.png">
+                    <img src="static/img/user-profile-image.png">
+                    <img src="static/img/user-profile-image.png">
+                </div>
+                <div class="todo-main-box">
+                    <div class="todo-message">
+                        <span class="bold">프로젝트 명</span><span>에 </span><span class="bold">새로운 과제 </span><span>가 등록 되었습니다. </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="project-apply">
+            <div class="apply-box">
+                <div class="apply-main-box">
+                    <div class="apply-grid">
+                        <div class="apply-message">
+                            <span class="bold">Circruit</span><span> 프로젝트 </span><span class="bold">팀원 모집 </span><span>이 등록 되었습니다. </span>
+                        </div>
+                        <div>
+                            <button><img class="apply-button" src="static/img/apply-button.png"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><div class="todo-update">
         <div class="todo-update-date">
             <span>2019-10-02</span>
         </div>
         <div class="todo-box">
             <div class="project-member">
-                <img src="img/user-profile-image.png">
-                <img src="img/user-profile-image.png">
-                <img src="img/user-profile-image.png">
-                <img src="img/user-profile-image.png">
-                <img src="img/user-profile-image.png">
-                <img src="img/user-profile-image.png">
+                <img src="static/img/user-profile-image.png">
+                <img src="static/img/user-profile-image.png">
+                <img src="static/img/user-profile-image.png">
+                <img src="static/img/user-profile-image.png">
+                <img src="static/img/user-profile-image.png">
+                <img src="static/img/user-profile-image.png">
             </div>
             <div class="todo-main-box">
                 <div class="todo-message">
@@ -19,51 +55,19 @@
             </div>
         </div>
     </div>
-    <div class="project-apply">
-        <div class="apply-box">
-            <div class="apply-main-box">
-                <div class="apply-grid">
-                    <div class="apply-message">
-                        <span class="bold">Circruit</span><span> 프로젝트 </span><span class="bold">팀원 모집 </span><span>이 등록 되었습니다. </span>
-                    </div>
-                    <div>
-                        <button><img class="apply-button" src="img/apply-button.png"></button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div><div class="todo-update">
-    <div class="todo-update-date">
-        <span>2019-10-02</span>
-    </div>
-    <div class="todo-box">
-        <div class="project-member">
-            <img src="img/user-profile-image.png">
-            <img src="img/user-profile-image.png">
-            <img src="img/user-profile-image.png">
-            <img src="img/user-profile-image.png">
-            <img src="img/user-profile-image.png">
-            <img src="img/user-profile-image.png">
-        </div>
-        <div class="todo-main-box">
-            <div class="todo-message">
-                <span class="bold">프로젝트 명</span><span>에 </span><span class="bold">새로운 과제 </span><span>가 등록 되었습니다. </span>
-            </div>
-        </div>
-    </div>
-</div>
-    <div class="project-apply">
-        <div class="apply-box">
-            <div class="apply-main-box">
-                <div class="apply-grid">
-                    <div class="apply-message">
-                        <span class="bold">Circruit</span><span> 프로젝트 </span><span class="bold">팀원 모집 </span><span>이 등록 되었습니다. </span>
-                    </div>
-                    <div>
-                        <button><img class="apply-button" src="img/apply-button.png"></button>
+        <div class="project-apply">
+            <div class="apply-box">
+                <div class="apply-main-box">
+                    <div class="apply-grid">
+                        <div class="apply-message">
+                            <span class="bold">Circruit</span><span> 프로젝트 </span><span class="bold">팀원 모집 </span><span>이 등록 되었습니다. </span>
+                        </div>
+                        <div>
+                            <button><img class="apply-button" src="static/img/apply-button.png"></button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+{% endblock %}

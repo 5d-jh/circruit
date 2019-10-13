@@ -11,9 +11,11 @@
     <body>
         <div id="page">
             <header id="header">
-                <div id="logo">
-                    <img id="logo-image" src="static/img/Circruit.png">
-                </div>
+                <a href="/">
+                    <div id="logo">
+                        <img id="logo-image" src="static/img/Circruit.png">
+                    </div>
+                </a>
                 <div id="top">
                     <img id="github-icon" src="static/img/github-icon.png">
                     <a href="/feed">
@@ -24,7 +26,7 @@
                         <img id="user-profile-image" src="static/img/user-profile-image.png">
                         <div id="user-profile">
                             <p id="user-name">
-                                Username
+                                {{ username }}
                             </p>
                             <div id="user-tier">
                                 <img src="static/img/github-icon.png">
@@ -35,11 +37,8 @@
                 </div>
             </header>
             <main id="main">
-                {% if is_user_logged_in %}
-                    {% include 'main.html' %}
-                {% else %}
-                    <a href="/user/authorize" class="btn btn-primary">GitHub로 로그인</a>
-                {% endif %}
+                {% block main_content %}
+                {% endblock %}
             </main>
         </div>
     </body>

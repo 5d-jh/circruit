@@ -1,58 +1,66 @@
-<div class="container">
-    <div id="main-user">
-        <div id="main-profile-div">
-            <img id="main-profile-image" src="static/img/user-profile-image.png">
-        </div>
-        <div id="main-user-explain">
-            <div id="main-user-name">
-                <span>name</span>
-                <img src="static/img/github-icon.png">
+{% extends "layout.html" %}
+
+{% block main_content %}
+    {% if is_user_logged_in %}
+        <div class="container">
+            <div id="main-user">
+                <div id="main-profile-div">
+                    <img id="main-profile-image" src="static/img/user-profile-image.png">
+                </div>
+                <div id="main-user-explain">
+                    <div id="main-user-name">
+                        <span>{{ username }}</span>
+                        <img src="static/img/github-icon.png">
+                    </div>
+                    <div id="introduction">
+                        간단한 설명 간단한 설명 간단한 설명 간단한 설명 간단한 설명 간단한 설명 간단한 설명
+                    </div>
+                    <progress value="31" max="100"></progress>
+                </div>
             </div>
-            <div id="introduction">
-                간단한 설명 간단한 설명 간단한 설명 간단한 설명 간단한 설명 간단한 설명 간단한 설명
+            <div id="menu">
+                <ul id="ul">
+                    <li id="repositories">개인 레포</li>
+                    <li id="projects" class="selected">프로젝트</li>
+                    <li id="histories">히스토리</li>
+                </ul>
+                <div id="box">
+                    <!-- 위 리스트 활성화 여부에 따라 불러오는 html 파일이 다름 -->
+                </div>
             </div>
-            <progress value="31" max="100"></progress>
         </div>
-    </div>
-    <div id="menu">
-        <ul id="ul">
-            <li id="repositories">개인 레포</li>
-            <li id="projects" class="selected">프로젝트</li>
-            <li id="histories">히스토리</li>
-        </ul>
-        <div id="box">
-            <!-- 위 리스트 활성화 여부에 따라 불러오는 html 파일이 다름 -->
-        </div>
-    </div>
-</div>
-<script>
-    // 처음 열렸을 때는 무조건 'project.html'을 가져옴
-    $('#box').load('project.html');
+        <script>
+            // 처음 열렸을 때는 무조건 'project.html'을 가져옴
+            $('#box').load('project.html');
 
-    // repositories 활성화 -> 'repository.html'을 읽어오고 selected 클래스를 옮김
-    $('#repositories').on('click', function () {
-        $('#box').load('repository.html');
-        var target = document.querySelector('#repositories');
-        target.classList.add('selected');
-        document.querySelector('#projects').classList.remove('selected');
-        document.querySelector('#histories').classList.remove('selected');
-    });
+            // repositories 활성화 -> 'repository.html'을 읽어오고 selected 클래스를 옮김
+            $('#repositories').on('click', function () {
+                $('#box').load('repository.html');
+                var target = document.querySelector('#repositories');
+                target.classList.add('selected');
+                document.querySelector('#projects').classList.remove('selected');
+                document.querySelector('#histories').classList.remove('selected');
+            });
 
-    // projects 활성화 -> 'projects.html'을 읽어오고 selected 클래스를 옮김
-    $('#projects').on('click', function () {
-        $('#box').load('project.html');
-        var target = document.querySelector('#projects');
-        target.classList.add('selected');
-        document.querySelector('#repositories').classList.remove('selected');
-        document.querySelector('#histories').classList.remove('selected');
-    });
+            // projects 활성화 -> 'projects.html'을 읽어오고 selected 클래스를 옮김
+            $('#projects').on('click', function () {
+                $('#box').load('project.html');
+                var target = document.querySelector('#projects');
+                target.classList.add('selected');
+                document.querySelector('#repositories').classList.remove('selected');
+                document.querySelector('#histories').classList.remove('selected');
+            });
 
-    // histories 활성화 -> 'history.html'을 읽어오고 selected 클래스를 옮김
-    $('#histories').on('click', function () {
-        $('#box').load('history.html');
-        var target = document.querySelector('#histories');
-        target.classList.add('selected');
-        document.querySelector('#repositories').classList.remove('selected');
-        document.querySelector('#projects').classList.remove('selected');
-    });
-</script>
+            // histories 활성화 -> 'history.html'을 읽어오고 selected 클래스를 옮김
+            $('#histories').on('click', function () {
+                $('#box').load('history.html');
+                var target = document.querySelector('#histories');
+                target.classList.add('selected');
+                document.querySelector('#repositories').classList.remove('selected');
+                document.querySelector('#projects').classList.remove('selected');
+            });
+        </script>
+    {% else %}
+        <a href="/user/authorize" class="btn btn-primary">GitHub로 로그인</a>
+    {% endif %}
+{% endblock %}
