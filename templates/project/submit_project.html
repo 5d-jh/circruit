@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block main_content %}
+    <div class="container" style="text-align: left;">
+        <div class="form-group">
+            <div class="row">
+                    <div class="col-sm">
+                        <h2>프로젝트 선택</h2>
+                        <div class="list-group">
+                            {% for project in projects %}
+                                <button type="button" class="list-group-item list-group-item-action" name="project">
+                                    {{project.name}}
+                                </button>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="col-sm">
+                        <h2>개발 스택 선택</h2>
+                        <div class="list-group">
+                            
+                        </div>
+                    </div>
+                
+            </div>
+        </div>
+        <form>
+            
+            <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+{% endblock %}

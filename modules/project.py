@@ -1,53 +1,35 @@
 from flask import Blueprint, request, render_template, redirect, url_for
 from flask_dance.contrib.github import github
-from modules.api_func import get_gh_user_info
+from modules.api_func import get_gh_user_info, get_gh_projects_info
 
 def project_blueprint(db):
-    blueprint = Blueprint('user', __name__)
+    blueprint = Blueprint('project', __name__)
 
     @blueprint.route("/create", methods=['GET', 'POST'])
     def create_user():
         user = get_gh_user_info()
 
-        if request.method == 'GET':
-            return render_template("create_user.html", username=user["login"])
+        print(get_gh_projects_info(user["login"]))
 
-        db.users.insert_one({
-            "username": user["login"],
-            "avatar_url": user["avatar_url"],
-            "bio": user['bio'],
-            "dev_stacks": request.form["dev_stacks"],
-            "contacts": request.form["contacts"]
-        })
-        return redirect("/feed")
+        if request.method == "GET":
+            return render_template(
+                "project/submit_project.html",
+                username = user["login"],
+                projects = get_gh_projects_info(user["login"])
+            )
+        elif request.method == "POST":
+            db_user = db.users.find_one({
+                "username": user["login"]
+            })
+            db_user["project_rank"] = 0
 
+            db.projects.insert_one({
+                "name": request.form["name"],
+                "rank": 0,
+                "proj_stacks": request.form["proj_stacks"],
+                "collaborators": [db_user]
+            })
 
-    @blueprint.route("/authorize")
-    def authorize():
-        if not github.authorized:
-            #깃허브 승인 페이지로 이동
-            return redirect(url_for("github.login"))
-
-        #승인 후 다시 이 페이지로 돌아와서 깃허브 유저 정보 획득
-        user = get_gh_user_info()
-
-        users_collection = db.users
-
-        #이미 회원가입된 사람인지 확인
-        result = users_collection.find_one({
-            "username": user["login"]
-        })
-
-        #신규 사용자라면 도큐먼트 생성 후 회원가입 페이지로 이동
-        if not result:
-            return redirect(f"/user/create")
-
-        #기존 사용자라면 피드로 이동
-        return redirect("/feed")
-
-    @blueprint.route("/login")
-    def user_login_view():
-        print("LOGIN")
-        return render_template("login.html")
+            return "Good"
 
     return blueprint
