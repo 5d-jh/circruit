@@ -34,5 +34,9 @@ def project_blueprint(db):
             )
 
             return "Good"
+    
+    @blueprint.route("/feed")
+    def feed():
+        return render_template("project/feed.html", projects=db.projects.find())
 
     return blueprint

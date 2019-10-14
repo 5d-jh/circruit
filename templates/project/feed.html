@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block main_content %}
+    <div class="container" style="text-align: left; position: relative;">
+        <a href="/project/create" class="btn btn-primary" style="position: absolute; right: 0;">프로젝트 생성</a>
+        <h2>프로젝트</h2>
+        <ul class="list-group list-group-flush">
+            {% for project in projects %}
+                <li class="list-group-item">
+                    {% for collab in project.collaborators %}
+                        <img src="{{collab.avatar_url}}" alt="collaborator" width="20px">
+                    {% endfor %}
+                    <h4 class="mb-1">{{project.name}}</h4>
+                    <p class="mb-1">
+                        {% for stack in project.proj_stacks %}
+                            <span class="badge badge-secondary" style="text-transform: capitalize;">
+                                {{stack}}
+                            </span>
+                        {% endfor %}
+                    </p>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

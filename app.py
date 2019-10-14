@@ -41,10 +41,6 @@ def my_page():
         username = user["login"] if user else None
     )
 
-@app.route("/feed")
-def feed():
-    return render_template("user/feed.html")
-
 app.register_blueprint(user_blueprint(db), url_prefix="/user")
 app.register_blueprint(project_blueprint(db), url_prefix="/project")
 
