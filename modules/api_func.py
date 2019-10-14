@@ -1,4 +1,6 @@
 from flask_dance.contrib.github import github
+from flask import redirect
+from functools import wraps
 
 def get_gh_user_info():
     resp = github.get("/user")
@@ -13,3 +15,13 @@ def get_gh_projects_info(username):
         return resp.json()
     else:
         []
+
+def auth_required(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        if not github.authorized:
+            return redirect("/user/login")
+
+        return f(*args, **kwargs)
+    
+    return decorated

@@ -43,7 +43,7 @@ def user_blueprint(db):
             return redirect(f"/user/create")
 
         #기존 사용자라면 피드로 이동
-        return redirect("/feed")
+        return redirect("/")
 
     @blueprint.route("/login")
     def user_login_view():
