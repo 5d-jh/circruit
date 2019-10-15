@@ -256,18 +256,7 @@ progress {
     width: 800px;
 }
 #ul {
-    height: 40px;
-    border-bottom: 1px solid gray;
     margin-bottom: 0;
-}
-#ul li  {
-    font-family: 'Nanum Square';
-    display: inline;
-    float: left;
-    height: 30px;
-    background-color: white;
-    border: 1px solid gray;
-    padding: 9px 15px 0 15px;
 }
 
 #projects {
