@@ -35,10 +35,12 @@ def index():
 @app.route("/mypage")
 def my_page():
     user = get_gh_user_info()
+    section = request.args.get("section")
 
     return render_template(
         "user/mypage.html",
-        username = user["login"] if user else None
+        username = user["login"] if user else None,
+        section = section
     )
 
 app.register_blueprint(user_blueprint(db), url_prefix="/user")

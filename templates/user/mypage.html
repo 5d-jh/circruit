@@ -18,45 +18,29 @@
             </div>
         </div>
         <div id="menu">
-            <ul id="ul">
-                <li id="repositories">개인 레포</li>
-                <li id="projects" class="selected">프로젝트</li>
-                <li id="histories">히스토리</li>
+            <ul id="ul" class="nav nav-tabs">
+                <li class="nav-item">
+                    <a href="?section=repositories" class="nav-link {% if section == 'repositories' or not section %}active{% endif %}">개인 저장소</a>
+                </li>
+                <li class="nav-item">
+                    <a href="?section=projects" class="nav-link {% if section == 'projects' %}active{% endif %}">프로젝트</a>
+                </li>
+                <li class="nav-item">
+                    <a href="?section=history" class="nav-link {% if section == 'history' %}active{% endif %}">히스토리</a>
+                </li>
             </ul>
             <div id="box">
+                {% if section == "repositories" %}
+                    {% include "user/repositories.html" %}
+                {% elif section == "projects" %}
+                    {% include "user/repositories.html" %}
+                {% elif section == "history" %}
+                    {% include "user/project_history.html" %}
+                {% else %}
+                    {% include "user/repositories.html" %}
+                {% endif %}
                 <!-- 위 리스트 활성화 여부에 따라 불러오는 html 파일이 다름 -->
             </div>
         </div>
     </div>
-    <script>
-        // 처음 열렸을 때는 무조건 'project.html'을 가져옴
-        $('#box').load('project.html');
-
-        // repositories 활성화 -> 'repository.html'을 읽어오고 selected 클래스를 옮김
-        $('#repositories').on('click', function () {
-            $('#box').load('repository.html');
-            var target = document.querySelector('#repositories');
-            target.classList.add('selected');
-            document.querySelector('#projects').classList.remove('selected');
-            document.querySelector('#histories').classList.remove('selected');
-        });
-
-        // projects 활성화 -> 'projects.html'을 읽어오고 selected 클래스를 옮김
-        $('#projects').on('click', function () {
-            $('#box').load('project.html');
-            var target = document.querySelector('#projects');
-            target.classList.add('selected');
-            document.querySelector('#repositories').classList.remove('selected');
-            document.querySelector('#histories').classList.remove('selected');
-        });
-
-        // histories 활성화 -> 'history.html'을 읽어오고 selected 클래스를 옮김
-        $('#histories').on('click', function () {
-            $('#box').load('history.html');
-            var target = document.querySelector('#histories');
-            target.classList.add('selected');
-            document.querySelector('#repositories').classList.remove('selected');
-            document.querySelector('#projects').classList.remove('selected');
-        });
-    </script>
 {% endblock %}
