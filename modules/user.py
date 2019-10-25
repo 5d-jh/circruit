@@ -9,17 +9,22 @@ def user_blueprint(db):
     def create_user():
         user = get_gh_user_info()
 
-        if request.method == 'GET':
-            return render_template("user/create_user.html", username=user["login"])
+        if request.method == "GET":
+            return render_template(
+                "user/create_user.html",
+                username=user["login"],
+                dev_stacks=db.devstacks.find()
+            )
+        elif request.method == "POST":
+            db.users.insert_one({
+                "username": user["login"],
+                "avatar_url": user["avatar_url"],
+                "bio": user['bio'],
+                "dev_stacks": request.form["dev_stacks"].split(" ")[1:],
+                "contacts": request.form["contacts"]
+            })
 
-        db.users.insert_one({
-            "username": user["login"],
-            "avatar_url": user["avatar_url"],
-            "bio": user['bio'],
-            "dev_stacks": request.form["dev_stacks"],
-            "contacts": request.form["contacts"]
-        })
-        return redirect("/feed")
+        return redirect("/mypage")
 
 
     @blueprint.route("/authorize")
