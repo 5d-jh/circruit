@@ -6,7 +6,7 @@
             <img src="{{collaborator.avatar_url}}" alt="{{collaborator.username}}" width="20">
         {% endfor %}
         <h2>{{proj_info.name}}</h2>
-        <a href="#" class="btn btn-primary">프로젝트 참여</a>
+        <a href="/project/{{proj_info.owner.username}}/{{proj_info.name}}/join" class="btn btn-primary">프로젝트 참여</a>
         <ul class="list-group list-group-flush">
             {% for project in projects %}
                 <li class="list-group-item">

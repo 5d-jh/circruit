@@ -75,4 +75,25 @@ def project_blueprint(db):
             proj_info = proj_info
         )
 
+    @blueprint.route("/<gh_usrname>/<proj_name>/join")
+    @auth_required
+    def join_project(gh_usrname, proj_name):
+        user = get_gh_user_info()
+        user["project_rank"] = 0
+        
+        try:
+            db.projects.find_one(
+                {
+                    "name": proj_name,
+                    "owner.username": gh_usrname
+                }, {
+                    "$addToSet": {
+                        "collaborators": user
+                    }
+                }
+            )
+            return redirect(f"/project/{gh_usrname}/{proj_name}")
+        except ConnectionError:
+            return "프로젝트에 참여하는 과정에서 오류가 발생했습니다.", 503
+
     return blueprint
