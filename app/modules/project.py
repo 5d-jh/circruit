@@ -3,7 +3,7 @@ sys.path.append(os.path.dirname(__file__))
 
 from flask import Blueprint, request, render_template, redirect, url_for
 from flask_dance.contrib.github import github
-from .api_func import get_gh_user_info, get_gh_projects_info, auth_required
+from api_func import get_gh_user_info, get_gh_projects_info, auth_required
 
 def project_blueprint(db):
     blueprint = Blueprint('project', __name__)
@@ -27,6 +27,7 @@ def project_blueprint(db):
                 "username": user["login"]
             })
             db_user["project_rank"] = 0
+            db_user["is_owner"] = True
 
             db.projects.update_one(
                 {
@@ -49,5 +50,30 @@ def project_blueprint(db):
     def feed():
         user = get_gh_user_info()
         return render_template("project/feed.html", projects=db.projects.find(), username = user["login"])
+
+    @blueprint.route("/<gh_usrname>/<proj_name>")
+    @auth_required
+    def project_detail(gh_usrname, proj_name):
+        proj_info = None
+        proj_by_name = db.projects.find(
+            {
+                "name": proj_name
+            }
+        )
+
+        #GitHub에서는 다른 사용자가 같은 저장소 이름을 사용할 수 있으므로 사용자 이름까지 체크
+        for proj in proj_by_name:
+            for collab in proj["collaborators"]:
+                if collab["is_owner"] and collab["username"] == gh_usrname:
+                    proj_info = proj
+                    break
+        
+        if proj_info == None:
+            return "프로젝트를 찾을 수 없습니다.", 404
+
+        return render_template(
+            "project/project_detail.html",
+            proj_info = proj_info
+        )
 
     return blueprint
