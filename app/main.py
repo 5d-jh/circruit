@@ -1,4 +1,6 @@
-import os
+import os, sys
+sys.path.append(os.path.dirname(__file__))
+
 from flask import Flask, render_template, redirect, url_for, request
 from flask_dance.contrib.github import make_github_blueprint, github
 from pymongo import MongoClient
@@ -43,4 +45,4 @@ app.register_blueprint(user_blueprint(db), url_prefix="/user")
 app.register_blueprint(project_blueprint(db), url_prefix="/project")
 
 if __name__ == "main":
-    app.run(debug=True)
+    app.run()

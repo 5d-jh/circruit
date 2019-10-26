@@ -1,6 +1,9 @@
+import os, sys
+sys.path.append(os.path.dirname(__file__))
+
 from flask import Blueprint, request, render_template, redirect, url_for
 from flask_dance.contrib.github import github
-from modules.api_func import get_gh_user_info, get_gh_projects_info, auth_required
+from .api_func import get_gh_user_info, get_gh_projects_info, auth_required
 
 def project_blueprint(db):
     blueprint = Blueprint('project', __name__)

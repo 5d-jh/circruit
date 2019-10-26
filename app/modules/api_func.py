@@ -1,3 +1,6 @@
+import os, sys
+sys.path.append(os.path.dirname(__file__))
+
 from flask_dance.contrib.github import github
 from flask import redirect
 from functools import wraps

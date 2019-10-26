@@ -1,6 +1,6 @@
 from flask import Blueprint, request, render_template, redirect, url_for
 from flask_dance.contrib.github import github
-from modules.api_func import get_gh_user_info
+from .api_func import get_gh_user_info
 
 def user_blueprint(db):
     blueprint = Blueprint('user', __name__)
