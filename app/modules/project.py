@@ -27,7 +27,6 @@ def project_blueprint(db):
                 "username": user["login"]
             })
             db_user["project_rank"] = 0
-            db_user["is_owner"] = True
 
             db.projects.update_one(
                 {
@@ -37,6 +36,7 @@ def project_blueprint(db):
                         "name": request.form["name"],
                         "rank": 0,
                         "proj_stacks": request.form["proj_stacks"].split(" ")[1:],
+                        "owner": db_user,
                         "collaborators": [db_user]
                     }
                 },
@@ -63,10 +63,9 @@ def project_blueprint(db):
 
         #GitHub에서는 다른 사용자가 같은 저장소 이름을 사용할 수 있으므로 사용자 이름까지 체크
         for proj in proj_by_name:
-            for collab in proj["collaborators"]:
-                if collab["is_owner"] and collab["username"] == gh_usrname:
-                    proj_info = proj
-                    break
+            if proj["owner"]["username"] == gh_usrname:
+                proj_info = proj
+                break
         
         if proj_info == None:
             return "프로젝트를 찾을 수 없습니다.", 404

@@ -10,7 +10,7 @@
                     {% for collab in project.collaborators %}
                         <img src="{{collab.avatar_url}}" alt="collaborator" width="20px">
                     {% endfor %}
-                    <h4 class="mb-1">{{project.name}}</h4>
+                    <h4 class="mb-1"><a href="/project/{{project.owner.username}}/{{project.name}}">{{project.name}}</a></h4>
                     <p class="mb-1">
                         {% for stack in project.proj_stacks %}
                             <span class="badge badge-secondary" style="text-transform: capitalize;">
