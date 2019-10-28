@@ -14,7 +14,7 @@
                 "FLASK_ENV": "development",
                 "FLASK_DEBUG": "1",
                 "OAUTHLIB_INSECURE_TRANSPORT": "1",
-                "DATABASE_URL": "mongodb://circruitdb:FK7QSRVGwYoKObRfSRjdycTSjXluNvrKaOiMhgzX4GbmuaR51QZX5UCHBlBeYA3ogEhvy2XqeoyPEpUoj2OS5g==@circruitdb.documents.azure.com:10255/?ssl=true&replicaSet=globaldb"
+                "DATABASE_URL": "mongodb://localhost"
             },
             "args": [
                 "run",
