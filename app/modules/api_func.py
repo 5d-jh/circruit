@@ -33,6 +33,6 @@ def auth_required(f):
             "username": get_gh_user_info()["login"]
         })
 
-        return f(user, *args, **kwargs)
+        return f(user=user, *args, **kwargs)
     
     return decorated

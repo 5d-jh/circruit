@@ -22,7 +22,6 @@ blueprint = make_github_blueprint(
 app.register_blueprint(blueprint, url_prefix="/login")
 
 @app.route("/")
-@auth_required
 def index():
     if not github.authorized:
         return redirect("/user/login")
@@ -31,13 +30,12 @@ def index():
 
 @app.route("/mypage")
 @auth_required
-def my_page():
-    user = get_gh_user_info()
+def my_page(user):
     section = request.args.get("section")
 
     return render_template(
         "user/mypage.html",
-        username = user["login"] if user else None,
+        username = user["username"] if user else None,
         section = section
     )
 
