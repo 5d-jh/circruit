@@ -3,18 +3,21 @@
 {% block main_content %}
     <div class="container">
         <div id="main-user">
-            <div id="main-profile-div">
-                <img id="main-profile-image" src="static/img/user-profile-image.png">
+            <div class="main-profile-container">
+                <img src="{{ user.avatar_url }}">
             </div>
             <div id="main-user-explain">
                 <div id="main-user-name">
-                    <span>{{ username }}</span>
-                    <img src="static/img/github-icon.png">
+                    <span>{{ user.username }}</span>
+                    <!--<img src="static/img/github-icon.png">-->
                 </div>
                 <div id="introduction">
-                    간단한 설명 간단한 설명 간단한 설명 간단한 설명 간단한 설명 간단한 설명 간단한 설명
+                    <span><p>{{ user.bio }}</p>
+                    <span><p>{{ user.contacts }}</p></span>
                 </div>
-                <progress value="31" max="100"></progress>
+                <div class="progress" style="height: 24px">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: 40%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="250">40%</div>
+                </div>
             </div>
         </div>
         <div id="menu">

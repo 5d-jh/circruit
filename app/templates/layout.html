@@ -10,22 +10,20 @@
     <body>
         <div id="page">
             <header id="header">
-                <a href="/">
-                    <div id="logo">
-                        <img id="logo-image" src="/static/img/Circruit.png">
-                    </div>
-                </a>
+                <div id="logo">
+                    <a href="/"><img id="logo-image" src="/static/img/Circruit.png"></a>
+                </div>
                 <div id="top">
-                    <img id="github-icon" src="/static/img/github-icon.png">
+                    <a href="https://github.com/{{user.username}}" target="_blank"><img id="github-icon" src="/static/img/github-icon.png"></a>
                     <a href="/project/feed">
                         <img id="feed" src="/static/img/feed.png">
                     </a>
                     
                     <div id="user">
-                        <img id="user-profile-image" src="/static/img/user-profile-image.png">
+                        <img id="user-profile-image" src="{{ user.avatar_url }}">
                         <div id="user-profile">
                             <p id="user-name">
-                                {{ username }}
+                                {{ user.username }}
                             </p>
                             <div id="user-tier">
                                 <img src="/static/img/github-icon.png">

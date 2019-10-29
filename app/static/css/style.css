@@ -147,30 +147,30 @@ div {
 }
 #header {
     background-color: white;
-    margin-top: 10px;
-    padding-bottom: 50px;
+    padding-bottom: 52px;
+    padding-top: 10px;
     border-bottom: 1px solid rgba(128, 128, 128, 0.3);
 }
 #logo {
     float: left;
+    margin-left: 20px; 
 }
 #logo-image {
-    margin-left: 15px;
     height: 40px;
     weight: 122px;
 }
 #top {
     float: right;
     display: grid;
-    grid-template-columns: 60px 65px 2fr;
+    grid-template-columns: 60px 60px 1fr;
 }
 #github-icon {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
 }
 #feed {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
 }
 #user {
     border-left: 1px solid rgba(128, 128, 128, 0.3);
@@ -212,21 +212,28 @@ div {
 }
 #main-user {
     text-align: left;
-    margin-top: 50px;
+    margin: 50px;
     margin-left: 20px;
+    margin-right: 20px;
     height: 180px;
     width: 1040px;
     display: grid;
     grid-template-columns: 150px 2fr;
 }
-#main-profile-div {
+.main-profile-container {
+    position: relative;
+    width: 180px;
     height: 180px;
     vertical-align: middle;
     text-align: center;
 }
-#main-profile-image {
+.main-profile-container img {
+    position: absolute;
     text-align: center;
-    margin-top: 40px;
+    top: 20px;
+    left: 0px;
+    width: 140px;
+    height: 140px;
 }
 #main-user-explain {
     display: inline;

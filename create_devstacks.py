@@ -2,7 +2,7 @@ from pymongo import MongoClient
 import os
 
 db_url = "mongodb://localhost"
-mongo_client = MongoClient(os.environ["DATABASE_URL"])
+mongo_client = MongoClient("mongodb://localhost")
 db = mongo_client.circruit
 
 devstacks = "Python C C++ Go Rust JavaScript Ruby Java React Vue Angular Node.js Flask Django Unity Unreal MachineLearning".split()
