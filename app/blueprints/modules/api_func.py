@@ -19,20 +19,3 @@ def get_gh_projects_info(username):
         return resp.json()
     else:
         []
-
-def auth_required(f):
-    @wraps(f)
-    def decorated(*args, **kwargs):
-        if not github.authorized:
-            return redirect("/user/login")
-
-        mongo_client = MongoClient(os.environ["DATABASE_URL"])
-        db = mongo_client.circruit
-
-        user = db.users.find_one({
-            "username": get_gh_user_info()["login"]
-        })
-
-        return f(user=user, *args, **kwargs)
-    
-    return decorated

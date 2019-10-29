@@ -3,7 +3,8 @@ sys.path.append(os.path.dirname(__file__))
 
 from flask import Blueprint, request, render_template, redirect, url_for
 from flask_dance.contrib.github import github
-from api_func import get_gh_user_info, get_gh_projects_info, auth_required
+from modules.api_func import get_gh_projects_info
+from modules import auth_required
 
 def project_blueprint(db):
     blueprint = Blueprint('project', __name__)
@@ -58,7 +59,7 @@ def project_blueprint(db):
 
     @blueprint.route("/<gh_usrname>/<proj_name>")
     @auth_required
-    def project_detail(_, gh_usrname, proj_name):
+    def project_detail(user, gh_usrname, proj_name):
         proj_info = None
         proj_by_name = db.projects.find(
             {

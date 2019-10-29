@@ -4,9 +4,10 @@ sys.path.append(os.path.dirname(__file__))
 from flask import Flask, render_template, redirect, url_for, request
 from flask_dance.contrib.github import make_github_blueprint, github
 from pymongo import MongoClient
-from modules.user import user_blueprint
-from modules.project import project_blueprint
-from modules.api_func import get_gh_user_info, auth_required
+from blueprints.user import user_blueprint
+from blueprints.project import project_blueprint
+from blueprints.modules.api_func import get_gh_user_info
+from blueprints.modules import auth_required
 
 mongo_client = MongoClient(os.environ["DATABASE_URL"])
 db = mongo_client.circruit
