@@ -82,7 +82,7 @@ def project_blueprint(db):
         user["project_rank"] = 0
         
         try:
-            db.projects.find_one(
+            db.projects.update_one(
                 {
                     "name": proj_name,
                     "owner.username": gh_usrname
