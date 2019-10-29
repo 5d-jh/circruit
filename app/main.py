@@ -36,7 +36,7 @@ def my_page(user):
 
     return render_template(
         "user/mypage.html",
-        username = user["username"] if user else None,
+        user = user,
         section = section
     )
 
