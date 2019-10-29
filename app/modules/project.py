@@ -9,24 +9,20 @@ def project_blueprint(db):
     blueprint = Blueprint('project', __name__)
 
     @blueprint.route("/create", methods=['GET', 'POST'])
-    def create_project():
-        user = get_gh_user_info()
-
+    @auth_required
+    def create_project(user):
         if request.method == "GET":
             return render_template(
                 "project/submit_project.html",
-                username = user["login"],
-                projects = get_gh_projects_info(user["login"]),
+                username = user["username"],
+                projects = get_gh_projects_info(user["username"]),
                 devstacks = db.devstacks.find()
             )
         elif request.method == "POST":
             if len(request.form["name"]) == 0 or len(request.form["proj_stacks"]) == 0:
                 return "Data is missing", 400
 
-            db_user = db.users.find_one({
-                "username": user["login"]
-            })
-            db_user["project_rank"] = 0
+            user["project_rank"] = 0
 
             db.projects.update_one(
                 {
@@ -36,8 +32,8 @@ def project_blueprint(db):
                         "name": request.form["name"],
                         "rank": 0,
                         "proj_stacks": request.form["proj_stacks"].split(" ")[1:],
-                        "owner": db_user,
-                        "collaborators": [db_user]
+                        "owner": user,
+                        "collaborators": [user]
                     }
                 },
                 upsert=True
@@ -47,27 +43,22 @@ def project_blueprint(db):
     
     @blueprint.route("/feed")
     @auth_required
-    def feed():
-        user = get_gh_user_info()
-        db_user = db.users.find_one({
-            "username": user["login"]
-        })
-
+    def feed(user):
         project_list = db.projects.find({
             "proj_stacks": {
-                "$in": db_user["dev_stacks"]
+                "$in": user["dev_stacks"]
             }
         })
 
         return render_template(
             "project/feed.html",
             projects = project_list,
-            username = user["login"]
+            username = user["username"]
         )
 
     @blueprint.route("/<gh_usrname>/<proj_name>")
     @auth_required
-    def project_detail(gh_usrname, proj_name):
+    def project_detail(_, gh_usrname, proj_name):
         proj_info = None
         proj_by_name = db.projects.find(
             {
@@ -91,10 +82,9 @@ def project_blueprint(db):
 
     @blueprint.route("/<gh_usrname>/<proj_name>/join")
     @auth_required
-    def join_project(gh_usrname, proj_name):
-        user = get_gh_user_info()
+    def join_project(user, gh_usrname, proj_name):
         user["project_rank"] = 0
-        
+
         try:
             db.projects.update_one(
                 {
@@ -107,7 +97,7 @@ def project_blueprint(db):
                 }
             )
             return redirect(f"/project/{gh_usrname}/{proj_name}")
-        except ConnectionError:
+        except:
             return "프로젝트에 참여하는 과정에서 오류가 발생했습니다.", 503
 
     return blueprint
