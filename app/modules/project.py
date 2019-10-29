@@ -49,7 +49,21 @@ def project_blueprint(db):
     @auth_required
     def feed():
         user = get_gh_user_info()
-        return render_template("project/feed.html", projects=db.projects.find(), username = user["login"])
+        db_user = db.users.find_one({
+            "username": user["login"]
+        })
+
+        project_list = db.projects.find({
+            "proj_stacks": {
+                "$in": db_user["dev_stacks"]
+            }
+        })
+
+        return render_template(
+            "project/feed.html",
+            projects = project_list,
+            username = user["login"]
+        )
 
     @blueprint.route("/<gh_usrname>/<proj_name>")
     @auth_required
