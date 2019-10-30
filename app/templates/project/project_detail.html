@@ -1,28 +1,38 @@
 {% extends "layout.html" %}
 
 {% block main_content %}
-    <div class="container">
-        {% for collaborator in proj_info.collaborators %}
-            <img src="{{collaborator.avatar_url}}" alt="{{collaborator.username}}" width="20">
-        {% endfor %}
-        <h2>{{proj_info.name}}</h2>
-        <a href="/project/{{proj_info.owner.username}}/{{proj_info.name}}/join" class="btn btn-primary">프로젝트 참여</a>
-        <ul class="list-group list-group-flush">
-            {% for project in projects %}
-                <li class="list-group-item">
-                    {% for collab in project.collaborators %}
-                        <img src="{{collab.avatar_url}}" alt="collaborator" width="20px">
-                    {% endfor %}
-                    <h4 class="mb-1">{{project.name}}</h4>
-                    <p class="mb-1">
-                        {% for stack in project.proj_stacks %}
+    <div class="container" style="background-color: #ffffff; padding: 0; height: 0%; font-family: 'Nanum Square';">
+        <div id="project-detail-box">
+            <div class="row">
+                <div class="col-10 project-detail-information">
+                    <div class="project-detail-name">
+                        <h2 style="font-size: 40px;">{{proj_info.name}}</h2>
+                    </div>
+                    <div class="project-detail-devstack">
+                        {% for stack in proj_info.proj_stacks %}
                             <span class="badge badge-secondary" style="text-transform: capitalize;">
                                 {{stack}}
                             </span>
                         {% endfor %}
+                    </div>
+                    <div class="project-detail-member">
+                        {% for collaborator in proj_info.collaborators %}
+                            <img src="{{collaborator.avatar_url}}" alt="{{collaborator.username}}" width="20">
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="col-2 project-detail-checkbox">
+                    <p>
+                        <a href="/project/{{proj_info.owner.username}}/{{proj_info.name}}/join" class="btn btn-primary btn-lg">신청하기</a>
                     </p>
-                </li>
-            {% endfor %}
-        </ul>
+                </div>
+            </div>
+        </div>
+        <div id="project-github-link">
+            <img src="/static/img/github-icon.png">
+            <span>
+                <a href="http://github.com/{{proj_info.owner.username}}/{{proj_info.name}}">http://github.com/{{proj_info.owner.username}}/{{proj_info.name}}</a>
+            </span>
+        </div>
     </div>
 {% endblock %}
