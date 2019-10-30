@@ -15,7 +15,7 @@ def project_blueprint(db):
         if request.method == "GET":
             return render_template(
                 "project/submit_project.html",
-                username = user["username"],
+                user = user,
                 projects = get_gh_projects_info(user["username"]),
                 devstacks = db.devstacks.find()
             )
@@ -54,7 +54,7 @@ def project_blueprint(db):
         return render_template(
             "project/feed.html",
             projects = project_list,
-            username = user["username"]
+            user = user
         )
 
     @blueprint.route("/<gh_usrname>/<proj_name>")
