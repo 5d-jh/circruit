@@ -4,8 +4,7 @@ sys.path.append(os.path.dirname(__file__))
 from flask import Flask, render_template, redirect, url_for, request
 from flask_dance.contrib.github import make_github_blueprint, github
 from pymongo import MongoClient
-from blueprints.user import user_blueprint
-from blueprints.project import project_blueprint
+from blueprints import user, project
 from blueprints.modules.api_func import get_gh_user_info
 from blueprints.modules import auth_required
 
@@ -40,8 +39,8 @@ def my_page(user):
         section = section
     )
 
-app.register_blueprint(user_blueprint(db), url_prefix="/user")
-app.register_blueprint(project_blueprint(db), url_prefix="/project")
+app.register_blueprint(user.blueprint, url_prefix="/user")
+app.register_blueprint(project.blueprint, url_prefix="/project")
 
 if __name__ == "main":
     app.run()
