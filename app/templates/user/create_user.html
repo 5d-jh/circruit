@@ -1,43 +1,51 @@
-{% extends "layout.html" %}
-
-{% block main_content %}
-    <div class="container" style="text-align: left;">
-        <h1>반가워요, {{ username }}님!</h1>
-        <form action="/user/create" method="post">
-            <div class="form-group">
-                <input type="hidden" name="dev_stacks" id="usr-stacks">
-                <div class="row">
-                    <div class="col-sm">
-                        <h2 style="text-align: left;">1. 개발 스택을 선택하세요</h2>
-                        <div class="list-group-wrap" style="max-height: 450px; overflow-y: scroll;">
-                            <div class="list-group">
-                                {% for dev_stack in dev_stacks %}
-                                    <button type="button" value="{{dev_stack.name}}" class="list-group-item list-group-item-action project-btn" name="project" style="text-align: left;">
-                                        <h5 class="mb-1">{{dev_stack.name}}</h5>
-                                    </button>
-                                {% endfor %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="/static/css/style.css">
+        <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <div class="container" style="text-align: left;">
+            <h1>반가워요, {{ username }}님!</h1>
+            <form action="/user/create" method="post">
+                <div class="form-group">
+                    <input type="hidden" name="dev_stacks" id="usr-stacks">
+                    <div class="row">
+                        <div class="col-sm">
+                            <h2 style="text-align: left;">1. 개발 스택을 선택하세요</h2>
+                            <div class="list-group-wrap" style="max-height: 450px; overflow-y: scroll;">
+                                <div class="list-group">
+                                    {% for dev_stack in dev_stacks %}
+                                        <button type="button" value="{{dev_stack.name}}" class="list-group-item list-group-item-action project-btn" name="project" style="text-align: left;">
+                                            <h5 class="mb-1">{{dev_stack.name}}</h5>
+                                        </button>
+                                    {% endfor %}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-sm">
-                        <h2 style="text-align: left;">2. 연락처를 적어주세요</h2>
-                        <input type="text" name="contacts" class="form-control" placeholder="양식은 자유입니다.">
+                        <div class="col-sm">
+                            <h2 style="text-align: left;">2. 연락처를 적어주세요</h2>
+                            <input type="text" name="contacts" class="form-control" placeholder="양식은 자유입니다.">
+                        </div>
                     </div>
                 </div>
-            </div>
-            <input type="submit" class="btn btn-primary" name="proj_stacks"value="가입하기">
-        </form>
-        <script>
-            $("#proj-stacks").val("")
+                <input type="submit" class="btn btn-primary" name="proj_stacks"value="가입하기">
+            </form>
+            <script>
+                $("#proj-stacks").val("")
 
-            $(".project-btn").click(function () {
-                this.disabled = true;
+                $(".project-btn").click(function () {
+                    this.disabled = true;
 
-                $(this).addClass("active");
-                $("#usr-stacks").val(
-                    $("#usr-stacks").val() + ' ' + $(this).val()
-                )
-            });
-        </script>
-    </div>
-{% endblock %}
+                    $(this).addClass("active");
+                    $("#usr-stacks").val(
+                        $("#usr-stacks").val() + ' ' + $(this).val()
+                    )
+                });
+            </script>
+        </div>
+    </body>
+</html>
+    

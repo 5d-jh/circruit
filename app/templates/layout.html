@@ -3,27 +3,29 @@
     <head>
         <meta charset="UTF-8">
         <title>똑똑한 팀찾기 Circruit</title>
-        <link rel="stylesheet" href="/static/css/style.css">
+        <link rel="stylesheet" href="/static/css/style.css?after">
         <link rel="stylesheet" href="/static/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     </head>
     <body>
         <div id="page">
             <header id="header">
-                <div id="logo">
-                    <a href="/"><img id="logo-image" src="/static/img/Circruit.png"></a>
-                </div>
+                <a href="/">
+                    <div id="logo">
+                        <img id="logo-image" src="/static/img/Circruit.png">
+                    </div>
+                </a>
                 <div id="top">
-                    <a href="https://github.com/{{user.username}}" target="_blank"><img id="github-icon" src="/static/img/github-icon.png"></a>
+                    <img id="github-icon" src="/static/img/github-icon.png">
                     <a href="/project/feed">
                         <img id="feed" src="/static/img/feed.png">
                     </a>
                     
                     <div id="user">
-                        <img id="user-profile-image" src="{{ user.avatar_url }}">
+                        <img id="user-profile-image" src="/static/img/user-profile-image.png">
                         <div id="user-profile">
                             <p id="user-name">
-                                {{ user.username }}
+                                
                             </p>
                             <div id="user-tier">
                                 <img src="/static/img/github-icon.png">
@@ -33,7 +35,7 @@
                     </div>
                 </div>
             </header>
-            <main id="main" style="padding: 20px;">
+            <main id="main" style="padding: 20px; background-color: #efefef;">
                 {% block main_content %}
                 {% endblock %}
             </main>
