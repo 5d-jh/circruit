@@ -157,20 +157,20 @@ div {
 }
 #logo-image {
     height: 40px;
-    weight: 122px;
+    width: 122px;
 }
 #top {
     float: right;
     display: grid;
-    grid-template-columns: 60px 60px 1fr;
+    grid-template-columns: 45px 50px 1fr;
 }
 #github-icon {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
 }
 #feed {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
 }
 #user {
     border-left: 1px solid rgba(128, 128, 128, 0.3);
@@ -433,7 +433,7 @@ progress {
     grid-template-rows: 90px 90px 3fr;
 }
 .project-member img {
-    heigth: 80px;
+    height: 80px;
     width: 80px;
     margin-right: 10px;
 }
@@ -483,4 +483,35 @@ progress {
 .apply-button {
     height: 80px;
     width: 240px;
+}
+
+#project-detail-box {
+    margin-top: 30px;
+    padding-bottom: 20px;
+    
+}
+.project-detail-information div{
+    text-align: left;
+    padding-left: 30px;
+}
+.project-detail-information img {
+    width: 25px;
+    height: 25px;
+    margin-top: 15px;
+}
+.project-detail-checkbox {
+    margin-top: 15px;
+}
+.project-detail-checkbox p{
+    font-weight: 700;
+}
+#project-github-link {
+    padding: 5px 0 0 25px;
+    text-align: left;
+    border-top: 1px solid rgba(128, 128, 128, 0.3);
+    border-bottom: 1px solid rgba(128, 128, 128, 0.3);
+}
+#project-github-link img{
+    width: 30px;
+    height: 30px;
 }
