@@ -15,3 +15,43 @@
 5. `venv\Scripts\activate.bat` 실행
 6. `pip install -r requirements.txt` 실행
 7. vscode의 왼쪽 debug 탭 클릭 후 상단에 플레이 버튼 클릭
+
+## 데이터베이스 모델
+```
+컬렉션명 {
+    설명 "필드명": 데이터 타입
+}
+```
+
+```
+users {
+    완료된 프로젝트 리스트 "finished_projects": [{
+        "name": String
+    }],
+    사용자 개발 스택 "dev_stacks": [String],
+    깃허브 프로필 사진 "avatar_url": String,
+    깃허브 프로필 바이오 "bio": String,
+    연락처 "contacts": String,
+    사용자 랭크 "rank": Number
+}
+
+projects {
+    프로젝트 이름 "name": String,
+    프로젝트 개발스택 "proj_stacks": [String],
+    팀장 정보 "owner": users,
+    참여한 사용자 정보 리스트 "collaborators": [{
+        사용자 정보 "collaborator": users,
+        프로젝트에서 평가된 점수 "project_rank": Number,
+        할 일 "todos": [{
+            완료(closed) 여부 "is_closed": Boolean,
+            평가 "rank": Number,
+            이슈 제목 "title": String,
+            이슈 링크 "link": String
+        }]
+    }]
+}
+
+devstacks {
+    개발 스택 이름 "name": String
+}
+```
