@@ -39,21 +39,16 @@ projects {
     프로젝트 이름 "name": String,
     프로젝트 개발스택 "proj_stacks": [String],
     팀장 정보 "owner": users,
-    배정되지 않은 이슈 "unassigned_todos": [{
+    할 일 "todos": [{
         완료(closed) 여부 "is_closed": Boolean,
         평가 "vote": Number,
         이슈 제목 "title": String,
-        이슈 링크 "link": String
+        이슈 링크 "link": String,
+        배정받은 멤버 이름(GitHub username) "assignees": None|String
     }],
     참여한 사용자 정보 리스트 "collaborators": [{
         사용자 정보 "collaborator": users,
-        프로젝트에서 평가된 점수 "project_rank": Number,
-        할 일 "todos": [{
-            완료(closed) 여부 "is_closed": Boolean,
-            평가 "vote": Number,
-            이슈 제목 "title": String,
-            이슈 링크 "link": String
-        }]
+        프로젝트에서 평가된 점수 "project_rank": Number
     }]
 }
 
