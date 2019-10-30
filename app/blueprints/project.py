@@ -3,7 +3,7 @@ sys.path.append(os.path.dirname(__file__))
 
 from flask import Blueprint, request, render_template, redirect, url_for
 from flask_dance.contrib.github import github
-from modules.api_func import get_gh_projects_info
+from modules.api_func import get_gh_projects_info, get_gh_user_info
 from modules import auth_required, db_required
 import json
 
@@ -63,25 +63,38 @@ def feed(user, db):
 @auth_required
 @db_required
 def project_detail(user, db, gh_usrname, proj_name):
-    proj_info = None
-    proj_by_name = db.projects.find(
+    proj_info = db.projects.find_one(
         {
-            "name": proj_name
+            "name": proj_name,
+            "owner.username": gh_usrname
         }
     )
-
-    #GitHub에서는 다른 사용자가 같은 저장소 이름을 사용할 수 있으므로 사용자 이름까지 체크
-    for proj in proj_by_name:
-        if proj["owner"]["username"] == gh_usrname:
-            proj_info = proj
-            break
     
     if proj_info == None:
         return "프로젝트를 찾을 수 없습니다.", 404
 
+    login_user = get_gh_user_info()
+    my_todos = []
+    others_todos = []
+    todos_no_assignee = [] #배정 받은 사람이 아무도 없는 todo
+    for todo in proj_info["todos"]:
+        if len(todo["assignees"]) == 0:
+            todos_no_assignee.append(todo)
+            continue
+
+        for assignee in todo["assignees"]:
+            if login_user["login"] == assignee["login"]:
+                my_todos.append(todo)
+                break
+        else:
+            others_todos.append(todo)
+        
     return render_template(
         "project/project_detail.html",
-        proj_info = proj_info
+        proj_info = proj_info,
+        my_todos = my_todos,
+        others_todos = others_todos,
+        todos_no_assignee = todos_no_assignee
     )
 
 @blueprint.route("/<gh_usrname>/<proj_name>/join")
@@ -109,7 +122,6 @@ def join_project(user, db, gh_usrname, proj_name):
 @db_required
 def manage_project_todo(db, gh_usrname, proj_name):
     hook_payload = json.loads(request.data)
-    print(hook_payload)
 
     if hook_payload["action"] == "opened":
         #Issue가 생성되면 새로운 todo 생성
