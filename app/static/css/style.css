@@ -157,7 +157,7 @@ div {
 }
 #logo-image {
     height: 40px;
-    width: 122px;
+    width: 150px;
 }
 #top {
     float: right;
@@ -494,13 +494,8 @@ progress {
     text-align: left;
     padding-left: 30px;
 }
-.project-detail-information img {
-    width: 25px;
-    height: 25px;
-    margin-top: 15px;
-}
 .project-detail-checkbox {
-    margin-top: 15px;
+    margin-top: 8px;
 }
 .project-detail-checkbox p{
     font-weight: 700;
@@ -514,4 +509,46 @@ progress {
 #project-github-link img{
     width: 30px;
     height: 30px;
+}
+.project-detail-member {
+    margin-top: 20px;
+}
+
+.project-detail-profile div {
+    text-align: left;
+}
+.project-detail-owner {
+    padding: 0 20px 0 30px;
+    display: grid;
+    grid-template-columns: 75px 1fr;
+}
+.owner-profile-image {
+    width: 50px;
+    height: 50px;
+}
+.owner-profile {
+    display: inline-block;
+}
+.owner-name {
+    padding-top: 0px;
+    font-weight: bold;
+    margin: 0;
+}
+.owner-tier {
+    margin-right: 2px;
+    margin-top: 3px;
+    font-size: 12px;
+}
+.owner-tier img {
+    display: inline-block;
+    vertical-align: middle;
+}
+.participant-profile-image {
+    text-align: right;
+    margin-top: 10px;
+    margin-right: 30px;
+}
+.participant-profile-image img{
+    height: 30px;
+    width: 30px;
 }
