@@ -1,0 +1,33 @@
+.container {
+    background: white;
+}
+
+.user-title-box {
+    display: flex;
+    margin-bottom: 30px;
+}
+
+.user-title-box__profile-container {
+    width: 140px;
+}
+
+.user-title-box__profile-container img {
+    width: 100%;
+}
+
+.user-title-box__userinfo-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: left;
+    flex-grow: 9;
+    padding-left: 15px;
+}
+
+.user-title-box__userinfo-container div {
+    text-align: left;
+}
+
+.tab-content {
+    padding-top: 15px;
+}

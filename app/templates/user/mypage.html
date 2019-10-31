@@ -1,38 +1,42 @@
 {% extends "layout.html" %}
 
 {% block main_content %}
+    <style>
+        @import url("/static/css/mypage.css");
+    </style>
     <div class="container">
-        <div id="main-user">
-            <div class="main-profile-container">
+        <div class="user-title-box">
+            <div class="user-title-box__profile-container">
                 <img src="{{ user.avatar_url }}">
             </div>
-            <div id="main-user-explain">
-                <div id="main-user-name">
-                    <span>{{ user.username }}</span>
-                    <!--<img src="static/img/github-icon.png">-->
+            <div class="user-title-box__userinfo-container">
+                <div>
+                    <h1>{{ user.username }}</h1>
                 </div>
-                <div id="introduction">
-                    <span><p>{{ user.bio }}</p>
-                    <span><p>{{ user.contacts }}</p></span>
+                <div>
+                    {% if user.bio %}
+                        <h5>{{ user.bio }}</h5>
+                    {% else %}
+                        <h5><i style="color: grey;">설명이 없습니다</i></h5>
+                    {% endif %}
                 </div>
-                <div class="progress" style="height: 24px">
-                    <div class="progress-bar bg-success" role="progressbar" style="width: 40%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="250">40%</div>
+                <div>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
                 </div>
+                
             </div>
         </div>
         <div id="menu">
-            <ul id="ul" class="nav nav-tabs">
-                <li class="nav-item">
-                    <a href="?section=repositories" class="nav-link {% if section == 'repositories' or not section %}active{% endif %}">개인 저장소</a>
-                </li>
-                <li class="nav-item">
-                    <a href="?section=projects" class="nav-link {% if section == 'projects' %}active{% endif %}">프로젝트</a>
-                </li>
-                <li class="nav-item">
-                    <a href="?section=history" class="nav-link {% if section == 'history' %}active{% endif %}">히스토리</a>
-                </li>
-            </ul>
-            <div id="box">
+            <nav>
+                <div id="ul" class="nav nav-tabs">
+                    <a href="?section=repositories" class="nav-item nav-link {% if section == 'repositories' or not section %}active{% endif %}">개인 저장소</a>
+                    <a href="?section=projects" class="nav-item nav-link {% if section == 'projects' %}active{% endif %}">프로젝트</a>
+                    <a href="?section=history" class="nav-item nav-link {% if section == 'history' %}active{% endif %}">히스토리</a>
+                </div>
+            </nav>
+            <div class="tab-content">
                 {% if section == "repositories" %}
                     {% include "user/repositories.html" %}
                 {% elif section == "projects" %}
