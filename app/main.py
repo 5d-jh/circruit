@@ -11,11 +11,13 @@ from blueprints.modules import auth_required
 mongo_client = MongoClient(os.environ["DATABASE_URL"])
 db = mongo_client.circruit
 
+DEV_ENV = os.environ["FLASK_ENV"] == "development"
+
 app = Flask(__name__)
 app.secret_key = "NEA#@WREBFsdfb{"
 blueprint = make_github_blueprint(
-    client_id="8ca7590993a769d4d8aa" if os.environ["REMOTE_DEV"] else "28e9cff80df971929acf",
-    client_secret="a85159c48436050fc1558d6f2b41bb944e027823" if os.environ["REMOTE_DEV"] else "e334101fb61d08f4198cf521bb8103b715fd5043",
+    client_id=("8ca7590993a769d4d8aa" if DEV_ENV else "28e9cff80df971929acf"),
+    client_secret=("a85159c48436050fc1558d6f2b41bb944e027823" if DEV_ENV else "e334101fb61d08f4198cf521bb8103b715fd5043"),
     redirect_url="/user/authorize",
     scope="repo,user"
 )
@@ -43,4 +45,4 @@ app.register_blueprint(user.blueprint, url_prefix="/user")
 app.register_blueprint(project.blueprint, url_prefix="/project")
 
 if __name__ == "main":
-    app.run()
+    app.run(host="0.0.0.0", debug=True)
