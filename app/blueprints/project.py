@@ -15,9 +15,10 @@ blueprint = Blueprint('project', __name__)
 def create_project(user, db):
     if request.method == "GET":
         return render_template(
-            "project/feed.html",
-            projects = project_list,
-            user = user
+            "project/submit_project.html",
+            username = user["username"],
+            projects = get_gh_projects_info(user["username"]),
+            devstacks = db.devstacks.find()
         )
     elif request.method == "POST":
         if len(request.form["name"]) == 0 or len(request.form["proj_stacks"]) == 0:
@@ -34,7 +35,8 @@ def create_project(user, db):
                     "rank": 0,
                     "proj_stacks": request.form["proj_stacks"].split(" ")[1:],
                     "owner": user,
-                    "collaborators": [user]
+                    "collaborators": [user],
+                    "todos": []
                 }
             },
             upsert=True
@@ -135,8 +137,13 @@ def manage_project_todo(db, gh_usrname, proj_name):
                         "vote": 0,
                         "id": hook_payload["issue"]["id"],
                         "title": hook_payload["issue"]["title"],
-                        "link": hook_payload["issue"]["url"],
-                        "assignees": hook_payload["issue"]["assignees"]
+                        "link": hook_payload["issue"]["html_url"],
+                        "assignees": [
+                            {
+                                "username": assignee["login"],
+                                "avatar_url": assignee["avatar_url"]
+                            } for assignee in hook_payload["issue"]["assignees"]
+                        ]
                     }
                 }
             }
@@ -151,7 +158,12 @@ def manage_project_todo(db, gh_usrname, proj_name):
                 "todos.id": hook_payload["issue"]["id"]
             }, {
                 "$set": {
-                    "todos.$.assignees": hook_payload["issue"]["assignees"]
+                    "todos.$.assignees": [
+                        {
+                            "username": assignee["login"],
+                            "avatar_url": assignee["avatar_url"]
+                        } for assignee in hook_payload["issue"]["assignees"]
+                    ]
                 }
             }
         )
