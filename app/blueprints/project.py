@@ -73,8 +73,7 @@ def project_detail(user, db, gh_usrname, proj_name):
     
     if proj_info == None:
         return "프로젝트를 찾을 수 없습니다.", 404
-
-    login_user = get_gh_user_info()
+    
     my_todos = []
     others_todos = []
     todos_no_assignee = [] #배정 받은 사람이 아무도 없는 todo
@@ -84,7 +83,7 @@ def project_detail(user, db, gh_usrname, proj_name):
             continue
 
         for assignee in todo["assignees"]:
-            if login_user["login"] == assignee["login"]:
+            if user["username"] == assignee["username"]:
                 my_todos.append(todo)
                 break
         else:
