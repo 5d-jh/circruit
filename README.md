@@ -25,6 +25,7 @@
 
 ```
 users {
+    사용자 이름 "username": String,
     완료된 프로젝트 리스트 "finished_projects": [{
         "name": String
     }],
@@ -41,10 +42,17 @@ projects {
     팀장 정보 "owner": users,
     할 일 "todos": [{
         완료(closed) 여부 "is_closed": Boolean,
-        평가 "vote": Number,
+        평가 "vote": {
+            긍정적 평가 "good": Number,
+            부정적 평가 "bad": Number
+        },
+        기한 "deadline": String<"yyyy-mm-dd">,
         이슈 제목 "title": String,
         이슈 링크 "link": String,
-        배정받은 멤버 이름(GitHub username) "assignees": None|String
+        배정받은 멤버 이름(GitHub username) "assignees": {
+            사용자 이름 "username": String,
+            깃허브 프로필 사진 "avatar_url": String
+        }
     }],
     참여한 사용자 정보 리스트 "collaborators": [{
         사용자 정보 "collaborator": users,
