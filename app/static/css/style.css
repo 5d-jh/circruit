@@ -406,79 +406,56 @@ progress {
     font-weight: bold;
 }
 
-.container2 {
-    margin: 0 auto;
-}
-.todo-update {
-    padding-top: 100px;
-    margin-left: 210px;
-    width: 1460px;
-    height: 350px;
-}
-.todo-update-date {
-    font-family: "Nanum Square";
-    text-align: left;
-    padding-left: 190px;
-    height: 26px;
-}
-.todo-box {
-    width: 1460px;
-    height: 324px;
+.feed-head {
     display: grid;
-    grid-template-columns: 180px 1fr;
+    width: 1360px;
+    grid-template-columns: 1000px 1fr;
 }
-.project-member {
-    display: grid;
-    grid-template-columns: 90px 1fr;
-    grid-template-rows: 90px 90px 3fr;
-}
-.project-member img {
-    height: 80px;
-    width: 80px;
-    margin-right: 10px;
-}
-.todo-main-box {
-    font-family: "Nanum Square";
-    background-color: white;
-    width: 1280px;
-    height: 324px;
-}
-.todo-message {
-    margin: 30px 0 0 30px;
-    text-align: left;
-    font-size: 34px;
-}
+
 .bold {
     font-weight: bold;
-    font-size: 40px;
+    font-size: 30px;
 }
 
 .project-apply {
-    padding-top: 100px;
-    margin-left: 210px;
-    width: 1460px;
+    padding-top: 30px;
+    margin-left: 50px;
+    width: 1280px;
     height: 324px;
+    margin-bottom: 50px;
+}
+.apply-box {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+}
+.apply-project-member {
+    display: grid;
+    grid-template-columns: 75px 1fr;
+    grid-template-rows: 90px 90px 3fr;
+}
+.apply-project-member img {
+    height: 60px;
+    width: 60px;
+    margin-top: 10px;
 }
 .apply-main-box {
     font-family: "Nanum Square";
-    margin-left: 180px;
+    margin-left: 10px;
     background-color: white;
-    width: 1280px;
+    width: 1120px;
     height: 324px;
 }
 .apply-grid {
     display: grid;
-    grid-template-columns: 980px 1fr;
+    grid-template-columns: 950px 1fr;
 }
 .apply-message {
     margin: 30px 0 0 30px;
     text-align: left;
-    font-size: 34px;
+    font-size: 25px;
 }
-.apply-grid button {
-    border: none;
-    background-color: white;
-    margin-top: 50px;
+.apply-grid a {
+    margin-top: 30px;
 }
 .apply-button {
     height: 80px;
