@@ -14,8 +14,8 @@ db = mongo_client.circruit
 app = Flask(__name__)
 app.secret_key = "NEA#@WREBFsdfb{"
 blueprint = make_github_blueprint(
-    client_id="28e9cff80df971929acf",
-    client_secret="e334101fb61d08f4198cf521bb8103b715fd5043",
+    client_id="8ca7590993a769d4d8aa" if os.environ["REMOTE_DEV"] else "28e9cff80df971929acf",
+    client_secret="a85159c48436050fc1558d6f2b41bb944e027823" if os.environ["REMOTE_DEV"] else "e334101fb61d08f4198cf521bb8103b715fd5043",
     redirect_url="/user/authorize",
     scope="repo,user"
 )
