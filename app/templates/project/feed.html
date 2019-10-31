@@ -2,24 +2,36 @@
 
 {% block main_content %}
     <div class="container" style="text-align: left; position: relative;">
-        <a href="/project/create" class="btn btn-primary" style="position: absolute; right: 0;">프로젝트 생성</a>
-        <h2>프로젝트</h2>
-        <ul class="list-group list-group-flush">
-            {% for project in projects %}
-                <li class="list-group-item">
-                    {% for collab in project.collaborators %}
-                        <img src="{{collab.avatar_url}}" alt="collaborator" width="20px">
-                    {% endfor %}
-                    <h4 class="mb-1"><a href="/project/{{project.owner.username}}/{{project.name}}">{{project.name}}</a></h4>
-                    <p class="mb-1">
-                        {% for stack in project.proj_stacks %}
-                            <span class="badge badge-secondary" style="text-transform: capitalize;">
-                                {{stack}}
-                            </span>
+        <div class="feed-head">
+            <div style="text-align: left;">
+                <span style="font-size: 40px; margin-left: 100px;">프로젝트</span>
+            </div>
+            <div style="margin-left: 80px;">
+                <a href="/project/create" class="btn btn-primary" style="font-size: 20px; margin: 10px 0 0 30px;">프로젝트 생성</a>
+            </div>
+            
+        </div>
+        {% for project in projects %}
+            <div class="project-apply">
+                <div class="apply-box">
+                    <div class="apply-project-member">
+                        {% for collab in project.collaborators %}
+                            <img src="{{collab.avatar_url}}" alt="collaborator" width="20px">
                         {% endfor %}
-                    </p>
-                </li>
-            {% endfor %}
-        </ul>
+                    </div>
+                    <div class="apply-main-box">
+                        <div class="apply-grid">
+                            <div class="apply-message">
+                                <span class="bold">{{ project.name }}</span><span> 프로젝트 </span><span class="bold">팀원 모집</span><span>이 등록 되었습니다. </span>
+                            </div>
+                            <div>
+                                <a href="/project/{{project.owner.username}}/{{project.name}}" class="btn btn-primary btn-lg">신청하기</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
     </div>
 {% endblock %}
+
