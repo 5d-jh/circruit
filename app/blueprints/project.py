@@ -5,7 +5,9 @@ from flask import Blueprint, request, render_template, redirect, url_for
 from flask_dance.contrib.github import github
 from modules.api_func import get_gh_projects_info, get_gh_user_info
 from modules import auth_required, db_required
+from datetime import datetime, timedelta
 import json
+import copy
 
 blueprint = Blueprint('project', __name__)
 
@@ -64,37 +66,19 @@ def feed(user, db):
 @auth_required
 @db_required
 def project_detail(user, db, gh_usrname, proj_name):
-    proj_info = db.projects.find_one(
+    project = db.projects.find_one(
         {
             "name": proj_name,
             "owner.username": gh_usrname
         }
     )
     
-    if proj_info == None:
+    if project == None:
         return "프로젝트를 찾을 수 없습니다.", 404
-    
-    my_todos = []
-    others_todos = []
-    todos_no_assignee = [] #배정 받은 사람이 아무도 없는 todo
-    for todo in proj_info["todos"]:
-        if len(todo["assignees"]) == 0:
-            todos_no_assignee.append(todo)
-            continue
-
-        for assignee in todo["assignees"]:
-            if user["username"] == assignee["username"]:
-                my_todos.append(todo)
-                break
-        else:
-            others_todos.append(todo)
         
     return render_template(
         "project/project_detail.html",
-        proj_info = proj_info,
-        my_todos = my_todos,
-        others_todos = others_todos,
-        todos_no_assignee = todos_no_assignee
+        project = project
     )
 
 @blueprint.route("/<gh_usrname>/<proj_name>/join")
@@ -118,6 +102,56 @@ def join_project(user, db, gh_usrname, proj_name):
     except:
         return "프로젝트에 참여하는 과정에서 오류가 발생했습니다.", 503
 
+@blueprint.route("/<gh_usrname>/<proj_name>/todo")
+@auth_required
+@db_required
+def project_todo_view(db, user, gh_usrname, proj_name):
+    project = db.projects.find_one(
+        {
+            "name": proj_name,
+            "owner.username": gh_usrname
+        }
+    )
+
+    if project == None:
+        return "프로젝트를 찾을 수 없습니다.", 404
+
+    my_todos = []
+    others_todos = []
+    todos_no_assignee = [] #배정 받은 사람이 아무도 없는 todo
+    for todo in project["todos"]:
+        if len(todo["assignees"]) == 0:
+            todos_no_assignee.append(todo)
+            continue
+
+        for assignee in todo["assignees"]:
+            if user["username"] == assignee["username"]:
+                my_todos.append(todo)
+                break
+        else:
+            others_todos.append(todo)
+    
+    #날짜순으로 정렬
+    my_todos.sort(key=lambda t: t["deadline"])
+
+    #가장 급한 todo가 뭔지 찾음
+    my_most_urgents = []
+    for i in range(1, len(my_todos)):
+        prev = my_todos[i-1]["deadline"].strftime("%Y%m%d")
+        next = my_todos[i-1]["deadline"].strftime("%Y%m%d")
+        if prev == next:
+            my_most_urgents = copy.deepcopy(my_todos[0:i+1])
+            break
+
+    return render_template(
+        "project/project_todo.html",
+        project = project,
+        my_todos = my_todos,
+        my_most_urgents = my_most_urgents,
+        others_todos = others_todos,
+        todos_no_assignee = todos_no_assignee
+    )
+
 @blueprint.route("/<gh_usrname>/<proj_name>/hook", methods=["POST"])
 @db_required
 def manage_project_todo(db, gh_usrname, proj_name):
@@ -137,6 +171,7 @@ def manage_project_todo(db, gh_usrname, proj_name):
                         "id": hook_payload["issue"]["id"],
                         "title": hook_payload["issue"]["title"],
                         "link": hook_payload["issue"]["html_url"],
+                        "deadline": datetime.now()+timedelta(days=7),
                         "assignees": [
                             {
                                 "username": assignee["login"],

@@ -1,0 +1,42 @@
+{% extends "project/project_detail.html" %}
+
+{% block project_detail_body %}
+    <style>
+        @import url("/static/css/project-todo.css");
+    </style>
+    <div class="todo-body">
+        <p>
+            <h3>가장 급한 과제</h3>
+            <ul>
+                {% for todo in my_most_urgents %}
+                    <li><a href="{{todo.link}}" target="_blank" rel="noopener noreferrer">{{todo.title}}</a></li>
+                {% endfor %}
+            </ul>
+        </p>
+        <p>
+            <h3>나의 과제</h3>
+            <ul>
+                {% for todo in my_todos %}
+                    <li><a href="{{todo.link}}" target="_blank" rel="noopener noreferrer">{{todo.title}}</a></li>
+                {% endfor %}
+            </ul>
+        </p>
+        <hr>
+        <p>
+            <h3>과제 평가하기</h3>
+            <ul>
+                {% for todo in others_todos %}
+                    <li><a href="{{todo.link}}" target="_blank" rel="noopener noreferrer">{{todo.title}}</a></li>
+                {% endfor %}
+            </ul>
+        </p>
+        <p>
+            <h3>지정된 사람이 없는 과제</h3>
+            <ul>
+                {% for todo in todos_no_assignee %}
+                    <li><a href="{{todo.link}}" target="_blank" rel="noopener noreferrer">{{todo.title}}</a></li>
+                {% endfor %}
+            </ul>
+        </p>
+    </div>
+{% endblock %}

@@ -1,15 +1,18 @@
 {% extends "layout.html" %}
 
 {% block main_content %}
-    <div class="container" style="background-color: #ffffff; padding: 0; font-family: 'Nanum Square';">
+    <style>
+        @import url("/static/css/project-detail.css");
+    </style>
+    <div class="container">
         <div id="project-detail-box">
             <div class="row">
                 <div class="col-10 project-detail-information">
                     <div class="project-detail-name">
-                        <h2 style="font-size: 50px;">{{proj_info.name}}</h2>
+                        <h2 style="font-size: 50px;">{{project.name}}</h2>
                     </div>
                     <div class="project-detail-devstack">
-                        {% for stack in proj_info.proj_stacks %}
+                        {% for stack in project.proj_stacks %}
                             <span class="badge badge-secondary" style="text-transform: capitalize;">
                                 {{stack}}
                             </span>
@@ -18,15 +21,14 @@
                     
                 </div>
                 <div class="col-2 project-detail-checkbox">
-                    <p>
-                        <a href="/project/{{proj_info.owner.username}}/{{proj_info.name}}/join" class="btn btn-primary btn-lg">신청하기</a>
-                    </p>
+                    <a href="/project/{{project.owner.username}}/{{project.name}}/join" class="btn btn-primary btn-lg">신청하기</a>
+                    
                 </div>
             </div>
             <div class="row project-detail-member">
                 <div class="col-8 project-detail-profile">
                     <div class="project-detail-owner">
-                        <img class="owner-profile-image" src="{{proj_info.owner.avatar_url}}">
+                        <img class="owner-profile-image" src="{{project.owner.avatar_url}}">
                         <div class="owner-profile">
                             <p class="owner-name">
                                 username
@@ -40,18 +42,24 @@
                 </div>
                 <div class="col-4 project-detail-participant">
                     <div class="participant-profile-image">
-                        {% for collaborator in proj_info.collaborators %}
+                        {% for collaborator in project.collaborators %}
                             <img src="{{collaborator.avatar_url}}" width="20">
                         {% endfor %}
                     </div>
                 </div>
             </div>
+            <div id="project-github-link">
+                <img src="/static/img/github-icon.png">
+                <span>
+                    <a href="http://github.com/{{project.owner.username}}/{{project.name}}">http://github.com/{{project.owner.username}}/{{project.name}}</a>
+                </span>
+            </div>
         </div>
-        <div id="project-github-link">
-            <img src="/static/img/github-icon.png">
-            <span>
-                <a href="http://github.com/{{proj_info.owner.username}}/{{proj_info.name}}">http://github.com/{{proj_info.owner.username}}/{{proj_info.name}}</a>
-            </span>
+        
+        <div class="project-detail-body">
+            {% block project_detail_body %}
+                <a href="{{project.name}}/todo" class="btn">To-Do</a>
+            {% endblock %}
         </div>
     </div>
 {% endblock %}
