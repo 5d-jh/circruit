@@ -44,12 +44,17 @@
                     <!-- todo 추가 후 잘 되는지 확인 부탁 -->
                     {% for todo in others_todos %}
                     <div class="todos">
-                        <div class="todo-name">
-                            {{todo.title}}
+                        <div>
+                            <div class="todo-name">
+                                {{todo.title}}
+                            </div>
+                            <div class="todo-info">
+                                과제 세부 내용
+                            </div>
                         </div>
-                        <div class="todo-info">
-                            과제 세부 내용
-                        </div>
+                        <form>
+                            <input id="checkbox" type="checkbox" style="margin-top: 45px;"/>
+                        </form>
                     </div>
                     {% endfor %}
                 </div>
