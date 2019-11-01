@@ -1,0 +1,44 @@
+#project {
+    margin-top: 30px;
+    width: 1080px;
+}
+#project .layer {
+    margin-bottom: 45px;
+    margin-left: 30px;
+    height: 326px;
+    border: 1px solid gray;
+    background-color: white;
+}
+.project-grid {
+    display: grid;
+    grid-template-columns: 539px 1fr;
+}
+
+.project-information {
+    margin: 10px 0 0 20px;
+}
+.project-name {
+    font-family: 'Nanum Square';
+    text-align: left;
+    font-size: 36px;
+    font-weight: bold;
+}
+.project-date {
+    font-family: 'Nanum Square';
+    margin-left: 4px;
+    text-align: left;
+    font-size: 14px;
+    margin-top: 3px;
+}
+.project-date span {
+    margin-right: 25px;
+}
+
+.project-user-image {
+    margin: 12px 12px 0 0;
+    text-align: right;
+}
+.project-user-image img {
+    display: inline;
+    margin-left: 15px;
+}

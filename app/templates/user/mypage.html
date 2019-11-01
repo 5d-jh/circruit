@@ -32,15 +32,15 @@
             <nav>
                 <div id="ul" class="nav nav-tabs">
                     <a href="?section=repositories" class="nav-item nav-link {% if section == 'repositories' or not section %}active{% endif %}">개인 저장소</a>
-                    <a href="?section=projects" class="nav-item nav-link {% if section == 'projects' %}active{% endif %}">프로젝트</a>
+                    <a href="?section=project" class="nav-item nav-link {% if section == 'project' %}active{% endif %}">프로젝트</a>
                     <a href="?section=history" class="nav-item nav-link {% if section == 'history' %}active{% endif %}">히스토리</a>
                 </div>
             </nav>
             <div class="tab-content">
                 {% if section == "repositories" %}
                     {% include "user/repositories.html" %}
-                {% elif section == "projects" %}
-                    {% include "user/repositories.html" %}
+                {% elif section == "project" %}
+                    {% include "user/project.html" %}
                 {% elif section == "history" %}
                     {% include "user/project_history.html" %}
                 {% else %}

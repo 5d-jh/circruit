@@ -192,8 +192,8 @@ div {
 #user-tier img {
     display: inline-block;
     vertical-align: middle;
-    width: 20px;
-    height: 20px;
+    width: 40px;
+    height: 40px;
 }
 
 main {
@@ -222,50 +222,9 @@ progress {
 #ul .selected {
     background-color: #EFEFEF;
 }
-#project {
-    width: 1080px;
-}
-#project .layer {
-    margin-top: 50px;
-    height: 330px;
-    width: 1078px;
-    border: 1px solid gray;
-    background-color: white;
-}
-.project-grid {
-    display: grid;
-    grid-template-columns: 539px 1fr;
-}
-
-.project-information {
-    margin: 20px 0 0 30px;
-}
-.project-name {
-    font-family: 'Nanum Square';
-    text-align: left;
-    font-size: 36px;
-    font-weight: bold;
-}
-.project-date {
-    font-family: 'Nanum Square';
-    margin-top: 8px;
-    text-align: left;
-    font-size: 14px;
-}
-.project-date span {
-    margin-right: 25px;
-}
-
-.project-user-image {
-    margin: 30px 30px 0 0;
-    text-align: right;
-}
-.project-user-image img {
-    display: inline;
-    margin-left: 10px;
-}
 
 #repository {
+    margin-top: 15px;
     width: 1080px;
     display: grid;
     grid-template-columns: 375px 375px 3fr;
@@ -273,134 +232,8 @@ progress {
 #repository .layer {
     width: 320px;
     height: 300px;
-    margin-right: 55px;
+    margin-left: 22px;
     margin-bottom: 55px;
     border: 1px solid gray;
     background-color: white;
-}
-
-#history {
-    width: 1080px;
-}
-#history .layer {
-    height: 146px;
-    width: 1078px;
-    border: 1px solid gray;
-    background-color: white;
-}
-.history-grid {
-    display: grid;
-    grid-template-columns: 539px 1fr;
-}
-
-.history-information {
-    margin: 10px 0 0 20px;
-}
-.history-name {
-    font-family: 'Nanum Square';
-    text-align: left;
-    font-size: 36px;
-    font-weight: bold;
-}
-.history-date {
-    font-family: 'Nanum Square';
-    margin-left: 4px;
-    text-align: left;
-    font-size: 14px;
-    margin-top: 3px;
-}
-.history-date span {
-    margin-right: 25px;
-}
-
-.history-user-image {
-    margin: 12px 12px 0 0;
-    text-align: right;
-}
-.history-user-image img {
-    display: inline;
-    margin-left: 15px;
-}
-.history-second-grid {
-    display: grid;
-    grid-template-columns: 800px 1fr;
-    margin-top: 15px;
-}
-.history-project-stack {
-    font-family: 'Nanum Square';
-    text-align: left;
-    margin: 20px 0 0 20px;
-}
-.history-project-stack span {
-    margin-right: 15px;
-}
-.rise-fall {
-    margin-right: 20px;
-    text-align: right;
-}
-.plus-minus {
-    font-family: 'Nanum Square';
-    font-size: 36px;
-    color: green;
-}
-.score {
-    font-family: 'Nanum Square';
-    font-size: 36px;
-    font-weight: bold;
-}
-
-.feed-head {
-    display: grid;
-    width: 1360px;
-    grid-template-columns: 1000px 1fr;
-}
-
-.bold {
-    font-weight: bold;
-    font-size: 30px;
-}
-
-.project-apply {
-    padding-top: 30px;
-    margin-left: 50px;
-    width: 1280px;
-    height: 324px;
-    margin-bottom: 50px;
-}
-.apply-box {
-    display: grid;
-    grid-template-columns: 150px 1fr;
-}
-.apply-project-member {
-    display: grid;
-    grid-template-columns: 75px 1fr;
-    grid-template-rows: 90px 90px 3fr;
-}
-.apply-project-member img {
-    height: 60px;
-    width: 60px;
-    margin-top: 10px;
-}
-.apply-main-box {
-    font-family: "Nanum Square";
-    margin-left: 10px;
-    background-color: white;
-    width: 1120px;
-    height: 324px;
-}
-.apply-grid {
-    display: grid;
-    grid-template-columns: 950px 1fr;
-}
-.apply-message {
-    margin: 30px 0 0 30px;
-    text-align: left;
-    font-size: 25px;
-}
-.apply-grid a {
-    margin-top: 30px;
-}
-.apply-button {
-    height: 80px;
-    width: 240px;
 }
