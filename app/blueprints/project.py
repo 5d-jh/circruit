@@ -18,9 +18,9 @@ def create_project(user, db):
     if request.method == "GET":
         return render_template(
             "project/submit_project.html",
-            user = user,
-            projects = get_gh_projects_info(user["username"]),
-            devstacks = db.devstacks.find()
+            user=user,
+            projects=get_gh_projects_info(user["username"]),
+            devstacks=db.devstacks.find()
         )
     elif request.method == "POST":
         if len(request.form["name"]) == 0 or len(request.form["proj_stacks"]) == 0:
@@ -58,8 +58,8 @@ def feed(user, db):
 
     return render_template(
         "project/feed.html",
-        projects = project_list,
-        user = user
+        projects=project_list,
+        user=user
     )
 
 @blueprint.route("/<gh_usrname>/<proj_name>")
@@ -78,8 +78,8 @@ def project_detail(user, db, gh_usrname, proj_name):
         
     return render_template(
         "project/project_detail.html",
-        project = project,
-        user = user
+        project=project,
+        user=user
     )
 
 @blueprint.route("/<gh_usrname>/<proj_name>/join")
@@ -106,7 +106,7 @@ def join_project(user, db, gh_usrname, proj_name):
 @blueprint.route("/<gh_usrname>/<proj_name>/todo")
 @auth_required
 @db_required
-def project_todo_view(db, user, gh_usrname, proj_name):
+def project_todo_view(user, db, gh_usrname, proj_name):
     project = db.projects.find_one(
         {
             "name": proj_name,
@@ -138,9 +138,9 @@ def project_todo_view(db, user, gh_usrname, proj_name):
     #가장 급한 todo가 뭔지 찾음
     my_most_urgents = []
     for i in range(1, len(my_todos)):
-        prev = my_todos[i-1]["deadline"].strftime("%Y%m%d")
-        next = my_todos[i-1]["deadline"].strftime("%Y%m%d")
-        if prev == next:
+        prev_date = my_todos[i-1]["deadline"].strftime("%Y%m%d")
+        next_date = my_todos[i-1]["deadline"].strftime("%Y%m%d")
+        if prev_date == next_date:
             my_most_urgents = copy.deepcopy(my_todos[0:i+1])
             break
 
@@ -200,6 +200,19 @@ def manage_project_todo(db, gh_usrname, proj_name):
                             "avatar_url": assignee["avatar_url"]
                         } for assignee in hook_payload["issue"]["assignees"]
                     ]
+                }
+            }
+        )
+
+    if hook_payload["action"] == "closed":
+        db.projects.update_one(
+            {
+                "name": proj_name,
+                "owner.username": gh_usrname,
+                "todos.id": hook_payload["issue"]["id"]
+            }, {
+                "$set": {
+                    "todos.$.is_closed": True
                 }
             }
         )
