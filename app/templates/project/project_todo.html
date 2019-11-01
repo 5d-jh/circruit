@@ -2,41 +2,66 @@
 
 {% block project_detail_body %}
     <style>
-        @import url("/static/css/project-todo.css");
+        @import url("/static/css/project-todo.css?after");
     </style>
     <div class="todo-body">
-        <p>
-            <h3>가장 급한 과제</h3>
-            <ul>
-                {% for todo in my_most_urgents %}
-                    <li><a href="{{todo.link}}" target="_blank" rel="noopener noreferrer">{{todo.title}}</a></li>
-                {% endfor %}
-            </ul>
-        </p>
-        <p>
-            <h3>나의 과제</h3>
-            <ul>
-                {% for todo in my_todos %}
-                    <li><a href="{{todo.link}}" target="_blank" rel="noopener noreferrer">{{todo.title}}</a></li>
-                {% endfor %}
-            </ul>
-        </p>
-        <hr>
-        <p>
-            <h3>과제 평가하기</h3>
-            <ul>
-                {% for todo in others_todos %}
-                    <li><a href="{{todo.link}}" target="_blank" rel="noopener noreferrer">{{todo.title}}</a></li>
-                {% endfor %}
-            </ul>
-        </p>
-        <p>
-            <h3>지정된 사람이 없는 과제</h3>
-            <ul>
-                {% for todo in todos_no_assignee %}
-                    <li><a href="{{todo.link}}" target="_blank" rel="noopener noreferrer">{{todo.title}}</a></li>
-                {% endfor %}
-            </ul>
-        </p>
+        <div class="assignment">
+            <p style="margin-bottom: 0; font-size: 25px; font-weight: bold;">
+                과제
+            </p>
+        </div>
+        <div class="evaluation">
+            <p style="margin-bottom: 0; font-size: 25px; font-weight: bold;">
+                평가
+            </p>
+            <div class="evaluation-grid">
+                <div class="evaluation-member">
+                    <!-- for문으로 반복하면 됨 -->
+                    <div class="evaluation-member-info">
+                        <div class="evaluation-profile">
+                            <img src="/static/img/github-icon.png">
+                        </div>
+                        <div class="evaluation-name">
+                            <!-- username 수정 필요 -->
+                            username
+                        </div>
+                    </div>
+                </div>
+                <div class="evaluation-todos">
+                    <div class="todos">
+                        <div>
+                            <div class="todo-name">
+                                title
+                            </div>
+                            <div class="todo-info">
+                                과제 세부 내용
+                            </div>
+                        </div>
+                        <form>
+                            <input id="checkbox" type="checkbox" style="margin-top: 45px;"/>
+                        </form>
+                    </div>
+                    <!-- todo 추가 후 잘 되는지 확인 부탁 -->
+                    {% for todo in others_todos %}
+                    <div class="todos">
+                        <div>
+                            <div class="todo-name">
+                                {{todo.title}}
+                            </div>
+                            <div class="todo-info">
+                                과제 세부 내용
+                            </div>
+                        </div>
+                        <form>
+                            <input id="checkbox" type="checkbox" style="margin-top: 45px;"/>
+                        </form>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div style="text-align: right; margin-right: 30px; color: white;">
+                <a class="btn btn-primary">제출</a>
+            </div>
+        </div>
     </div>
 {% endblock %}
