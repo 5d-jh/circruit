@@ -2,11 +2,11 @@
 
 {% block main_content %}
     <style>
-        @import url("/static/css/project-detail.css");
+        @import url("/static/css/project-detail.css?after");
     </style>
     <div class="container">
         <div id="project-detail-box">
-            <div class="row">
+            <div class="row" style="margin-left: 2px;">
                 <div class="col-10 project-detail-information">
                     <div class="project-detail-name">
                         <h2 style="font-size: 50px;">{{project.name}}</h2>
@@ -25,7 +25,7 @@
                     
                 </div>
             </div>
-            <div class="row project-detail-member">
+            <div class="row project-detail-member" style="margin-left: 2px;">
                 <div class="col-8 project-detail-profile">
                     <div class="project-detail-owner">
                         <img class="owner-profile-image" src="{{project.owner.avatar_url}}">

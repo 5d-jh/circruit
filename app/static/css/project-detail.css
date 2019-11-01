@@ -3,7 +3,7 @@
 }
 
 #project-detail-box {
-    padding-bottom: 20px;
+    padding-bottom: 10px;
 }
 .project-detail-information div{
     text-align: left;
@@ -27,6 +27,7 @@
 }
 .project-detail-member {
     margin-top: 10px;
+    margin-bottom: 20px;
 }
 
 .project-detail-profile div {
