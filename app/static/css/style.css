@@ -266,6 +266,7 @@ progress {
 }
 
 #repository {
+    margin-top: 15px;
     width: 1080px;
     display: grid;
     grid-template-columns: 375px 375px 3fr;
@@ -273,18 +274,20 @@ progress {
 #repository .layer {
     width: 320px;
     height: 300px;
-    margin-right: 55px;
+    margin-left: 22px;
     margin-bottom: 55px;
     border: 1px solid gray;
     background-color: white;
 }
 
 #history {
+    margin-top: 15px;
     width: 1080px;
 }
 #history .layer {
+    margin-bottom: 30px;
+    margin-left: 30px;
     height: 146px;
-    width: 1078px;
     border: 1px solid gray;
     background-color: white;
 }
@@ -324,7 +327,6 @@ progress {
 .history-second-grid {
     display: grid;
     grid-template-columns: 800px 1fr;
-    margin-top: 15px;
 }
 .history-project-stack {
     font-family: 'Nanum Square';
