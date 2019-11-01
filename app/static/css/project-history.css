@@ -1,0 +1,71 @@
+#history {
+    margin-top: 15px;
+    width: 1080px;
+}
+#history .layer {
+    margin-bottom: 30px;
+    margin-left: 30px;
+    height: 146px;
+    border: 1px solid gray;
+    background-color: white;
+}
+.history-grid {
+    display: grid;
+    grid-template-columns: 539px 1fr;
+}
+
+.history-information {
+    margin: 10px 0 0 20px;
+}
+.history-name {
+    font-family: 'Nanum Square';
+    text-align: left;
+    font-size: 36px;
+    font-weight: bold;
+}
+.history-date {
+    font-family: 'Nanum Square';
+    margin-left: 4px;
+    text-align: left;
+    font-size: 14px;
+    margin-top: 3px;
+}
+.history-date span {
+    margin-right: 25px;
+}
+
+.history-user-image {
+    margin: 12px 12px 0 0;
+    text-align: right;
+}
+.history-user-image img {
+    display: inline;
+    margin-left: 15px;
+}
+.history-second-grid {
+    display: grid;
+    grid-template-columns: 800px 1fr;
+}
+.history-project-stack {
+    font-family: 'Nanum Square';
+    text-align: left;
+    margin: 20px 0 0 20px;
+}
+.history-project-stack span {
+    margin-right: 15px;
+}
+.rise-fall {
+    margin-right: 20px;
+    text-align: right;
+}
+.plus-minus {
+    font-family: 'Nanum Square';
+    font-size: 36px;
+    color: green;
+}
+.score {
+    font-family: 'Nanum Square';
+    font-size: 36px;
+    font-weight: bold;
+}
+
