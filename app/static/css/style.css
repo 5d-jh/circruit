@@ -192,8 +192,8 @@ div {
 #user-tier img {
     display: inline-block;
     vertical-align: middle;
-    width: 20px;
-    height: 20px;
+    width: 40px;
+    height: 40px;
 }
 
 main {
@@ -221,48 +221,6 @@ progress {
 
 #ul .selected {
     background-color: #EFEFEF;
-}
-#project {
-    width: 1080px;
-}
-#project .layer {
-    margin-top: 50px;
-    height: 330px;
-    width: 1078px;
-    border: 1px solid gray;
-    background-color: white;
-}
-.project-grid {
-    display: grid;
-    grid-template-columns: 539px 1fr;
-}
-
-.project-information {
-    margin: 20px 0 0 30px;
-}
-.project-name {
-    font-family: 'Nanum Square';
-    text-align: left;
-    font-size: 36px;
-    font-weight: bold;
-}
-.project-date {
-    font-family: 'Nanum Square';
-    margin-top: 8px;
-    text-align: left;
-    font-size: 14px;
-}
-.project-date span {
-    margin-right: 25px;
-}
-
-.project-user-image {
-    margin: 30px 30px 0 0;
-    text-align: right;
-}
-.project-user-image img {
-    display: inline;
-    margin-left: 10px;
 }
 
 #repository {
