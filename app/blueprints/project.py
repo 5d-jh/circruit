@@ -154,6 +154,44 @@ def project_todo_view(user, db, gh_usrname, proj_name):
         user = user
     )
 
+@blueprint.route("/<gh_usrname>/<proj_name>/todo/vote", methods=["POST"])
+@auth_required
+@db_required
+def project_todo_vote(user, db, gh_usrname, proj_name):
+    project = db.projects.find_one(
+        {
+            "name": proj_name,
+            "owner.username": gh_usrname
+        }
+    )
+
+    if project == None:
+        return "프로젝트를 찾을 수 없습니다.", 404
+
+    good_issue_ids = list(map(int, request.form.keys()))
+
+    for todo in project["todos"]:
+        if todo["is_closed"] and not gh_usrname in todo["voted"]:
+            if todo["id"] in good_issue_ids:
+                todo["vote"]["good"] += 1
+            else:
+                todo["vote"]["bad"] += 1
+
+            todo["voted"].append(gh_usrname)
+
+    db.projects.update_one(
+        {
+            "name": proj_name,
+            "owner.username": gh_usrname
+        }, {
+            "$set": {
+                "todos": project["todos"]
+            }
+        }
+    )
+
+    return redirect(f"/project/{gh_usrname}/{proj_name}/todo")
+
 @blueprint.route("/<gh_usrname>/<proj_name>/hook", methods=["POST"])
 @db_required
 def manage_project_todo(db, gh_usrname, proj_name):
@@ -169,7 +207,11 @@ def manage_project_todo(db, gh_usrname, proj_name):
                 "$push": {
                     "todos": {
                         "is_closed": False,
-                        "vote": 0,
+                        "voted": [],
+                        "vote": {
+                            "good": 0,
+                            "bad": 0
+                        },
                         "id": hook_payload["issue"]["id"],
                         "title": hook_payload["issue"]["title"],
                         "link": hook_payload["issue"]["html_url"],

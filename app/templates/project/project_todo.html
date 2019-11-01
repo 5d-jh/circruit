@@ -9,59 +9,48 @@
             <p style="margin-bottom: 0; font-size: 25px; font-weight: bold;">
                 과제
             </p>
+            {% for todo in my_todos %}
+                <li class="list-group-item">
+                    <h5><a href="{{todo.link}}">{{todo.title}}</a></h5>
+                    <div class="form-check text-right">
+                    </div>
+                </li>
+            {% endfor %}
         </div>
         <div class="evaluation">
             <p style="margin-bottom: 0; font-size: 25px; font-weight: bold;">
                 평가
             </p>
-            <div class="evaluation-grid">
-                <div class="evaluation-member">
-                    <!-- for문으로 반복하면 됨 -->
-                    <div class="evaluation-member-info">
-                        <div class="evaluation-profile">
-                            <img src="/static/img/github-icon.png">
-                        </div>
-                        <div class="evaluation-name">
-                            <!-- username 수정 필요 -->
-                            username
-                        </div>
-                    </div>
-                </div>
-                <div class="evaluation-todos">
-                    <div class="todos">
-                        <div>
-                            <div class="todo-name">
-                                title
-                            </div>
-                            <div class="todo-info">
-                                과제 세부 내용
-                            </div>
-                        </div>
-                        <form>
-                            <input id="checkbox" type="checkbox" style="margin-top: 45px;"/>
-                        </form>
-                    </div>
-                    <!-- todo 추가 후 잘 되는지 확인 부탁 -->
+            <form method="POST" action="/project/{{project.owner.username}}/{{project.name}}/todo/vote">
+                <ul class="list-group list-group-flush">
                     {% for todo in others_todos %}
-                    <div class="todos">
-                        <div>
-                            <div class="todo-name">
-                                {{todo.title}}
-                            </div>
-                            <div class="todo-info">
-                                과제 세부 내용
-                            </div>
-                        </div>
-                        <form>
-                            <input id="checkbox" type="checkbox" style="margin-top: 45px;"/>
-                        </form>
-                    </div>
+                        <li class="list-group-item">
+                            <h5><a href="{{todo.link}}">{{todo.title}}</a></h5>
+                            {% if todo.is_closed %}
+                                <div class="form-check text-right">
+                                    <input class="form-check-input" type="checkbox" name={{todo.id}} value="good" id="defaultCheck1">
+                                    <label class="form-check-label" for="defaultCheck1">
+                                        좋아요
+                                    </label>
+                                </div>
+                            {% endif %}
+                        </li>
                     {% endfor %}
+                </ul>
+                <div class="text-right">
+                    <input type="submit" class="btn btn-primary text-right" value="평가 완료">
                 </div>
-            </div>
-            <div style="text-align: right; margin-right: 30px; color: white;">
-                <a class="btn btn-primary">제출</a>
-            </div>
+            </form>
         </div>
+        <script>
+            $(".evt-btn").click(function () {
+                this.disabled = true;
+
+                $(this).addClass("active");
+                $("#proj-stacks").val(
+                    $("#proj-stacks").val() + ' ' + $(this).val()
+                )
+            });
+        </script>
     </div>
 {% endblock %}
