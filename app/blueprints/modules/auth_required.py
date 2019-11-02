@@ -20,15 +20,22 @@ def auth_required(f):
             "username": get_gh_user_info()["login"]
         })
 
+        rank_class_idx = int(user["rank"] // 250)
+        icon_filename = ""
         rank_titles = [
             "브론즈 I", "브론즈 II", "브론즈 III", "브론즈 IV", "브론즈 V",
             "실버 I", "실버 II", "실버 III", "실버 IV", "실버 V",
             "플레티넘 I", "플레티넘 II", "플레티넘 III", "플레티넘 IV", "플레티넘 V",
             "다이아몬드 I", "다이아몬드 II", "다이아몬드 III", "다이아몬드 IV", "다이아몬드 V",
         ]
-        user["display_rank"] = { 
-            "rank_title": rank_titles[int(user["rank"]//250)],
-            "exp": int(user["rank"]%250)
+
+        icon_filename += ["B_", "S_", "P_", "D_"][int(rank_class_idx // 5)]
+        icon_filename += str((rank_class_idx % 5) + 1) + "_"
+
+        user["display_rank"] = {
+            "rank_title": rank_titles[rank_class_idx],
+            "exp": int(user["rank"] % 250),
+            "icons": (icon_filename+"small.png", icon_filename+"regular.png", icon_filename+"large.png")
         }
 
         return f(user=user, *args, **kwargs)
