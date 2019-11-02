@@ -40,8 +40,10 @@ projects {
     프로젝트 이름 "name": String,
     프로젝트 개발스택 "proj_stacks": [String],
     팀장 정보 "owner": users,
+    프로젝트 상태 "status": "end"|"recruiting"|"ongoing",
     할 일 "todos": [{
         완료(closed) 여부 "is_closed": Boolean,
+        평가한 사람 "voted": [String],
         평가 "vote": {
             긍정적 평가 "good": Number,
             부정적 평가 "bad": Number

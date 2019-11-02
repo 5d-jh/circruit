@@ -7,6 +7,7 @@ from pymongo import MongoClient
 from blueprints import user, project
 from blueprints.modules.api_func import get_gh_user_info
 from blueprints.modules import auth_required
+from modules import display_rank
 
 mongo_client = MongoClient(os.environ["DATABASE_URL"])
 db = mongo_client.circruit
@@ -35,10 +36,14 @@ def index():
 def my_page(user):
     section = request.args.get("section")
 
+    rank, point = display_rank(user["rank"])
+
     return render_template(
         "user/mypage.html",
-        user = user,
-        section = section
+        user=user,
+        section=section,
+        rank=rank,
+        point=int(point)
     )
 
 app.register_blueprint(user.blueprint, url_prefix="/user")
