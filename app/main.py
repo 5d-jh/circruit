@@ -6,7 +6,7 @@ from flask_dance.contrib.github import make_github_blueprint, github
 from pymongo import MongoClient
 from blueprints import user, project
 from blueprints.modules.api_func import get_gh_user_info
-from blueprints.modules import auth_required
+from blueprints.modules import auth_required, db_required
 
 mongo_client = MongoClient(os.environ["DATABASE_URL"])
 db = mongo_client.circruit
@@ -32,13 +32,15 @@ def index():
 
 @app.route("/mypage")
 @auth_required
-def my_page(user):
+def my_page(user,db):
+    projects=db.projects.find({})
+    print(projects)
     section = request.args.get("section")
-
     return render_template(
         "user/mypage.html",
         user = user,
-        section = section
+        section = section,
+        projects=projects
     )
 
 app.register_blueprint(user.blueprint, url_prefix="/user")
