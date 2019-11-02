@@ -21,9 +21,13 @@
                     
                 </div>
                 <div class="col-2 project-detail-checkbox">
-                    <a href="/project/{{project.owner.username}}/{{project.name}}/join" class="btn btn-primary btn-lg">신청하기</a>
+                    {% if project.status == "recruiting" %}
+                        <a href="/project/{{project.owner.username}}/{{project.name}}/join" class="btn btn-primary btn-lg">신청하기</a>
+                    {% else %}
+                        <button href="#" class="btn btn-primary btn-lg" disabled>신청하기</a>
+                    {% endif %}
+                    </div>
                     
-                </div>
             </div>
             <div class="row project-detail-member" style="margin-left: 2px;">
                 <div class="col-8 project-detail-profile">
@@ -31,7 +35,7 @@
                         <img class="owner-profile-image" src="{{project.owner.avatar_url}}">
                         <div class="owner-profile">
                             <p class="owner-name">
-                                username
+                                {{project.owner.username}}
                             </p>
                             <div class="owner-tier">
                                 <img src="/static/img/github-icon.png" style="width: 20px;">
@@ -43,7 +47,9 @@
                 <div class="col-4 project-detail-participant">
                     <div class="participant-profile-image">
                         {% for collaborator in project.collaborators %}
-                            <img src="{{collaborator.avatar_url}}" width="20">
+                            {% if collaborator.username != project.owner.username %}
+                                <img src="{{collaborator.avatar_url}}" width="20">
+                            {% endif %}
                         {% endfor %}
                     </div>
                 </div>
@@ -57,8 +63,11 @@
         </div>
         
         <div class="project-detail-body">
+            {% if is_owner and project.status == "recruiting" %}
+                <a href="/project/{{project.owner.username}}/{{project.name}}/join" class="btn btn-secondary">프로젝트 완료</a>
+            {% endif %}
             {% block project_detail_body %}
-                <a href="{{project.name}}/todo" class="btn">To-Do</a>
+                <a href="{{project.name}}/todo" class="btn btn-info">To-Do</a>
             {% endblock %}
         </div>
     </div>

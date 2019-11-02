@@ -80,7 +80,8 @@ def project_detail(user, db, gh_usrname, proj_name):
     return render_template(
         "project/project_detail.html",
         project=project,
-        user=user
+        user=user,
+        is_owner=project["owner"]["username"] == user["username"]
     )
 
 @blueprint.route("/<gh_usrname>/<proj_name>/join")
