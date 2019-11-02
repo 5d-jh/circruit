@@ -6,6 +6,7 @@
     </style>
     <div class="container">
         <div id="project-detail-box">
+
             <div class="row" style="margin-left: 2px;">
                 <div class="col-10 project-detail-information">
                     <div class="project-detail-name">
@@ -18,17 +19,16 @@
                             </span>
                         {% endfor %}
                     </div>
-                    
                 </div>
                 <div class="col-2 project-detail-checkbox">
                     {% if project.status == "recruiting" %}
                         <a href="/project/{{project.owner.username}}/{{project.name}}/join" class="btn btn-primary btn-lg">신청하기</a>
                     {% else %}
-                        <button href="#" class="btn btn-primary btn-lg" disabled>신청하기</a>
+                        <button class="btn btn-primary btn-lg" disabled>신청하기</a>
                     {% endif %}
-                    </div>
-                    
+                </div>
             </div>
+
             <div class="row project-detail-member" style="margin-left: 2px;">
                 <div class="col-8 project-detail-profile">
                     <div class="project-detail-owner">
@@ -44,6 +44,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="col-4 project-detail-participant">
                     <div class="participant-profile-image">
                         {% for collaborator in project.collaborators %}
@@ -54,11 +55,15 @@
                     </div>
                 </div>
             </div>
+
             <div id="project-github-link">
                 <img src="/static/img/github-icon.png">
                 <span>
                     <a href="http://github.com/{{project.owner.username}}/{{project.name}}">http://github.com/{{project.owner.username}}/{{project.name}}</a>
                 </span>
+            </div>
+            <div id="project-github-link">
+                <span class="badge badge-secondary">Webhook</span> <span class="badge badge-secondary">application/json</span> http://github.com/{{project.owner.username}}/{{project.name}}/hook
             </div>
         </div>
         
