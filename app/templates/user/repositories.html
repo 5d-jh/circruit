@@ -1,6 +1,12 @@
 <div id="repository">
-    <div class="layer" id="repository1">
+{% for devstacks in user.dev_stacks %}
+<div class="layer">
+<h1>{{devstacks}}</h1>
+</div>
+{% endfor %}
+</div>
 
+<!--
     </div>
     <div class="layer" id="repository2">
 
@@ -35,4 +41,4 @@
     <div class="layer" id="repository12">
 
     </div>
-</div>
+</div>-->
