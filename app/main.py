@@ -32,6 +32,7 @@ def index():
 
 @app.route("/mypage")
 @auth_required
+@db_required
 def my_page(user,db):
     projects=db.projects.find({})
     print(projects)
