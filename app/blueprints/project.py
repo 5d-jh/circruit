@@ -59,7 +59,7 @@ def feed(user, db):
             "$gte": user["rank"]-200,
             "$lte": user["rank"]+500
         }
-    })
+    }).sort([("_id", -1)])
 
     return render_template(
         "project/feed.html",
