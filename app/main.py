@@ -46,8 +46,8 @@ def my_page(user,db):
         "user/mypage.html",
         user=user,
         section=section,
-        rank=rank,
-        point=int(point),
+        rank_title=user["display_rank"]["rank_title"],
+        exp=user["exp"],
         projects=projects
     )
 

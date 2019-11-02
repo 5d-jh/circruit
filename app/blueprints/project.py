@@ -34,7 +34,7 @@ def create_project(user, db):
             }, {
                 "$set": {
                     "name": request.form["name"],
-                    "rank": 0,
+                    "rank": user["rank"],
                     "status": "recruiting",
                     "proj_stacks": request.form["proj_stacks"].split(" ")[1:],
                     "owner": user,
