@@ -35,10 +35,11 @@ def create_project(user, db):
                 "$set": {
                     "name": request.form["name"],
                     "rank": 0,
+                    "status": "recruiting",
                     "proj_stacks": request.form["proj_stacks"].split(" ")[1:],
                     "owner": user,
                     "collaborators": [user],
-                    "todos": []
+                    "todos": [],
                 }
             },
             upsert=True
@@ -102,6 +103,49 @@ def join_project(user, db, gh_usrname, proj_name):
         return redirect(f"/project/{gh_usrname}/{proj_name}")
     except:
         return "프로젝트에 참여하는 과정에서 오류가 발생했습니다.", 503
+
+@blueprint.route("/<gh_usrname>/<proj_name>/end")
+@auth_required
+@db_required
+def end_project(user, db, gh_usrname, proj_name):
+    project = db.projects.find_one(
+        {
+            "name": proj_name,
+            "owner.username": gh_usrname
+        }
+    )
+
+    if project == None:
+        return "프로젝트를 찾을 수 없습니다.", 404
+
+    if project["owner"]["username"] != user["username"]:
+        return "프로젝트를 마칠 권환이 없습니다.", 403
+    
+    for todo in project["todos"]:
+        db.users.update_many(
+            {
+                "username": {
+                    "$in": [assignee["username"] for assignee in todo["assignees"]]
+                }
+            }, {
+                "$inc": {
+                    "rank": todo["vote"]["good"]*100 - todo["vote"]["bad"]*70
+                }
+            }
+        )
+
+    db.projects.update_one(
+        {
+            "name": proj_name,
+            "owner.username": gh_usrname
+        }, {
+            "$set": {
+                "status": "end"
+            }
+        }
+    )
+
+    return redirect(f"/project/{gh_usrname}/{proj_name}/todo")
 
 @blueprint.route("/<gh_usrname>/<proj_name>/todo")
 @auth_required
