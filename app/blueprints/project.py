@@ -54,6 +54,10 @@ def feed(user, db):
     project_list = db.projects.find({
         "proj_stacks": {
             "$in": user["dev_stacks"]
+        },
+        "rank": {
+            "$gte": user["rank"]-200,
+            "$lte": user["rank"]+500
         }
     })
 

@@ -37,7 +37,6 @@ def index():
 @db_required
 def my_page(user,db):
     projects=db.projects.find({})
-    print(projects)
     section = request.args.get("section")
 
     rank, point = display_rank(user["rank"])
@@ -47,7 +46,7 @@ def my_page(user,db):
         user=user,
         section=section,
         rank_title=user["display_rank"]["rank_title"],
-        exp=user["exp"],
+        exp=user["display_rank"]["exp"],
         projects=projects
     )
 

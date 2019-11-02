@@ -27,8 +27,8 @@ def auth_required(f):
             "다이아몬드 I", "다이아몬드 II", "다이아몬드 III", "다이아몬드 IV", "다이아몬드 V",
         ]
         user["display_rank"] = { 
-            "rank_title": rank_titles[int(point//250)],
-            "exp": int(point%250)
+            "rank_title": rank_titles[int(user["rank"]//250)],
+            "exp": int(user["rank"]%250)
         }
 
         return f(user=user, *args, **kwargs)
