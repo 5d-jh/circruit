@@ -1,14 +1,16 @@
 FROM python:3.7
 
 EXPOSE 5000
+EXPOSE 27017
 
 WORKDIR /circruit
 COPY . /circruit
 
+ENV FLASK_ENV production
 ENV PYTHONPATH /circruit
 ENV STATIC_URL /static
-ENV STATIC_PATH /circruit/static
-ENV DATABASE_URL mongodb://circruitdb:FK7QSRVGwYoKObRfSRjdycTSjXluNvrKaOiMhgzX4GbmuaR51QZX5UCHBlBeYA3ogEhvy2XqeoyPEpUoj2OS5g==@circruitdb.documents.azure.com:10255/?ssl=true&replicaSet=globaldb
+ENV STATIC_PATH /circruit/app/static
+ENV DATABASE_URL mongodb://172.25.0.1
 
 RUN pip install -r requirements.txt
 CMD ["uwsgi", "--ini", "uwsgi.ini"]
