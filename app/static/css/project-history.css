@@ -25,22 +25,21 @@
 }
 .history-date {
     font-family: 'Nanum Square';
-    margin-left: 4px;
     text-align: left;
     font-size: 14px;
-    margin-top: 3px;
+    padding-top: 6px;
 }
 .history-date span {
-    margin-right: 25px;
+    margin-right: 10px;
 }
 
 .history-user-image {
-    margin: 12px 12px 0 0;
+    margin: 10px;
     text-align: right;
 }
 .history-user-image img {
     display: inline;
-    margin-left: 15px;
+    margin: 15px;
 }
 .history-second-grid {
     display: grid;
@@ -49,10 +48,11 @@
 .history-project-stack {
     font-family: 'Nanum Square';
     text-align: left;
-    margin: 20px 0 0 20px;
+    margin-left: 20px;
+    margin-top: 20px;
 }
 .history-project-stack span {
-    margin-right: 15px;
+    margin-right: 10px;
 }
 .rise-fall {
     margin-right: 20px;

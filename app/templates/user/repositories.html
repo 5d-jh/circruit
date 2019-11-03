@@ -1,8 +1,13 @@
 <div id="repository">
-{% for devstacks in user.dev_stacks %}
-<div class="layer">
-<h1>{{devstacks}}</h1>
-</div>
+    {% for devstacks in user.dev_stacks %}
+    <div class="layer">
+        <h3>{{projects}}</h3> <!--프로젝트 명이 나오지 않음-->
+        {% if projects.description %}
+            <p>{{projects.description}}</p>
+        {% else %}
+            <i>프로젝트 설명이 없습니다.</i>
+        {% endif %}
+    </div>
 {% endfor %}
 </div>
 
