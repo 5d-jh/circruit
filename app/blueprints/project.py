@@ -110,6 +110,20 @@ def join_project(user, db, gh_usrname, proj_name):
                 }
             }
         )
+
+        db.users.update_one(
+            {
+                "username": user["username"]
+            }, {
+                "$push": {
+                    "joined_projects": {
+                        "name": f"{gh_usrname}/{proj_name}",
+                        "status": "recruiting"
+                    }
+                }
+            }
+        )
+
         return redirect(f"/project/{gh_usrname}/{proj_name}")
     except:
         return "프로젝트에 참여하는 과정에서 오류가 발생했습니다.", 503

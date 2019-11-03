@@ -26,9 +26,10 @@
 ```
 users {
     사용자 이름 "username": String,
-    완료된 프로젝트 리스트 "finished_projects": [{
-        "name": String
-    }],
+    참여한 프로젝트 "joined_projects": [{
+        "name": String,
+        "status": String
+    }]
     사용자 개발 스택 "dev_stacks": [String],
     깃허브 프로필 사진 "avatar_url": String,
     깃허브 프로필 바이오 "bio": String,
