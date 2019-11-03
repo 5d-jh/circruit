@@ -80,12 +80,17 @@ def project_detail(user, db, gh_usrname, proj_name):
     
     if project == None:
         return "프로젝트를 찾을 수 없습니다.", 404
+    
+    collaborator_usernames = [
+        collaborator["username"] for collaborator in project["collaborators"]
+    ]
         
     return render_template(
         "project/project_detail.html",
         project=project,
         user=user,
-        is_owner=project["owner"]["username"] == user["username"]
+        is_owner=project["owner"]["username"] == user["username"],
+        is_collaborator=user["username"] in collaborator_usernames
     )
 
 @blueprint.route("/<gh_usrname>/<proj_name>/join")

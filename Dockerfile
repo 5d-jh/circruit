@@ -11,6 +11,7 @@ ENV PYTHONPATH /circruit
 ENV STATIC_URL /static
 ENV STATIC_PATH /circruit/app/static
 ENV DATABASE_URL mongodb://172.25.0.1
+ENV OAUTHLIB_INSECURE_TRANSPORT 1
 
 RUN pip install -r requirements.txt
 CMD ["uwsgi", "--ini", "uwsgi.ini"]
