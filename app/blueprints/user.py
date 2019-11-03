@@ -24,6 +24,7 @@ def create_user(db):
             "username": user["login"],
             "avatar_url": user["avatar_url"],
             "bio": user['bio'],
+            "rank": 0,
             "dev_stacks": request.form["dev_stacks"].split(" ")[1:],
             "contacts": request.form["contacts"]
         })

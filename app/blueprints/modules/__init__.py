@@ -3,3 +3,5 @@ sys.path.append(os.path.dirname(__file__))
 
 from auth_required import auth_required
 from db_required import db_required
+
+from display_rank import display_rank

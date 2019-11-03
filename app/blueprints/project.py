@@ -18,9 +18,9 @@ def create_project(user, db):
     if request.method == "GET":
         return render_template(
             "project/submit_project.html",
-            user = user,
-            projects = get_gh_projects_info(user["username"]),
-            devstacks = db.devstacks.find()
+            user=user,
+            projects=get_gh_projects_info(user["username"]),
+            devstacks=db.devstacks.find()
         )
     elif request.method == "POST":
         if len(request.form["name"]) == 0 or len(request.form["proj_stacks"]) == 0:
@@ -34,11 +34,12 @@ def create_project(user, db):
             }, {
                 "$set": {
                     "name": request.form["name"],
-                    "rank": 0,
+                    "rank": user["rank"],
+                    "status": "recruiting",
                     "proj_stacks": request.form["proj_stacks"].split(" ")[1:],
                     "owner": user,
                     "collaborators": [user],
-                    "todos": []
+                    "todos": [],
                 }
             },
             upsert=True
@@ -53,13 +54,17 @@ def feed(user, db):
     project_list = db.projects.find({
         "proj_stacks": {
             "$in": user["dev_stacks"]
+        },
+        "rank": {
+            "$gte": user["rank"]-200,
+            "$lte": user["rank"]+500
         }
-    })
+    }).sort([("_id", -1)])
 
     return render_template(
         "project/feed.html",
-        projects = project_list,
-        user = user
+        projects=project_list,
+        user=user
     )
 
 @blueprint.route("/<gh_usrname>/<proj_name>")
@@ -75,11 +80,17 @@ def project_detail(user, db, gh_usrname, proj_name):
     
     if project == None:
         return "프로젝트를 찾을 수 없습니다.", 404
+    
+    collaborator_usernames = [
+        collaborator["username"] for collaborator in project["collaborators"]
+    ]
         
     return render_template(
         "project/project_detail.html",
-        project = project,
-        user = user
+        project=project,
+        user=user,
+        is_owner=project["owner"]["username"] == user["username"],
+        is_collaborator=user["username"] in collaborator_usernames
     )
 
 @blueprint.route("/<gh_usrname>/<proj_name>/join")
@@ -103,10 +114,53 @@ def join_project(user, db, gh_usrname, proj_name):
     except:
         return "프로젝트에 참여하는 과정에서 오류가 발생했습니다.", 503
 
+@blueprint.route("/<gh_usrname>/<proj_name>/end")
+@auth_required
+@db_required
+def end_project(user, db, gh_usrname, proj_name):
+    project = db.projects.find_one(
+        {
+            "name": proj_name,
+            "owner.username": gh_usrname
+        }
+    )
+
+    if project == None:
+        return "프로젝트를 찾을 수 없습니다.", 404
+
+    if project["owner"]["username"] != user["username"]:
+        return "프로젝트를 마칠 권환이 없습니다.", 403
+    
+    for todo in project["todos"]:
+        db.users.update_many(
+            {
+                "username": {
+                    "$in": [assignee["username"] for assignee in todo["assignees"]]
+                }
+            }, {
+                "$inc": {
+                    "rank": todo["vote"]["good"]*100 - todo["vote"]["bad"]*70
+                }
+            }
+        )
+
+    db.projects.update_one(
+        {
+            "name": proj_name,
+            "owner.username": gh_usrname
+        }, {
+            "$set": {
+                "status": "end"
+            }
+        }
+    )
+
+    return redirect(f"/project/{gh_usrname}/{proj_name}/todo")
+
 @blueprint.route("/<gh_usrname>/<proj_name>/todo")
 @auth_required
 @db_required
-def project_todo_view(db, user, gh_usrname, proj_name):
+def project_todo_view(user, db, gh_usrname, proj_name):
     project = db.projects.find_one(
         {
             "name": proj_name,
@@ -138,9 +192,9 @@ def project_todo_view(db, user, gh_usrname, proj_name):
     #가장 급한 todo가 뭔지 찾음
     my_most_urgents = []
     for i in range(1, len(my_todos)):
-        prev = my_todos[i-1]["deadline"].strftime("%Y%m%d")
-        next = my_todos[i-1]["deadline"].strftime("%Y%m%d")
-        if prev == next:
+        prev_date = my_todos[i-1]["deadline"].strftime("%Y%m%d")
+        next_date = my_todos[i-1]["deadline"].strftime("%Y%m%d")
+        if prev_date == next_date:
             my_most_urgents = copy.deepcopy(my_todos[0:i+1])
             break
 
@@ -153,6 +207,44 @@ def project_todo_view(db, user, gh_usrname, proj_name):
         todos_no_assignee = todos_no_assignee,
         user = user
     )
+
+@blueprint.route("/<gh_usrname>/<proj_name>/todo/vote", methods=["POST"])
+@auth_required
+@db_required
+def project_todo_vote(user, db, gh_usrname, proj_name):
+    project = db.projects.find_one(
+        {
+            "name": proj_name,
+            "owner.username": gh_usrname
+        }
+    )
+
+    if project == None:
+        return "프로젝트를 찾을 수 없습니다.", 404
+
+    good_issue_ids = list(map(int, request.form.keys()))
+
+    for todo in project["todos"]:
+        if todo["is_closed"] and not gh_usrname in todo["voted"]:
+            if todo["id"] in good_issue_ids:
+                todo["vote"]["good"] += 1
+            else:
+                todo["vote"]["bad"] += 1
+
+            todo["voted"].append(gh_usrname)
+
+    db.projects.update_one(
+        {
+            "name": proj_name,
+            "owner.username": gh_usrname
+        }, {
+            "$set": {
+                "todos": project["todos"]
+            }
+        }
+    )
+
+    return redirect(f"/project/{gh_usrname}/{proj_name}/todo")
 
 @blueprint.route("/<gh_usrname>/<proj_name>/hook", methods=["POST"])
 @db_required
@@ -169,7 +261,11 @@ def manage_project_todo(db, gh_usrname, proj_name):
                 "$push": {
                     "todos": {
                         "is_closed": False,
-                        "vote": 0,
+                        "voted": [],
+                        "vote": {
+                            "good": 0,
+                            "bad": 0
+                        },
                         "id": hook_payload["issue"]["id"],
                         "title": hook_payload["issue"]["title"],
                         "link": hook_payload["issue"]["html_url"],
@@ -200,6 +296,19 @@ def manage_project_todo(db, gh_usrname, proj_name):
                             "avatar_url": assignee["avatar_url"]
                         } for assignee in hook_payload["issue"]["assignees"]
                     ]
+                }
+            }
+        )
+
+    if hook_payload["action"] == "closed":
+        db.projects.update_one(
+            {
+                "name": proj_name,
+                "owner.username": gh_usrname,
+                "todos.id": hook_payload["issue"]["id"]
+            }, {
+                "$set": {
+                    "todos.$.is_closed": True
                 }
             }
         )

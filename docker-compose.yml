@@ -6,11 +6,23 @@ services:
     volumes:
       - './nginx.conf:/etc/nginx/nginx.conf'
     ports:
-      - '80:80'
+      - '5080:80'
     links:
       - 'flask'
+    networks:
+      - mynet
   flask:
       container_name: flask
       build: '.'
       ports:
         - '5000'
+        - '27017'
+      networks:
+        - mynet
+
+networks:
+  mynet:
+    driver: bridge
+    ipam:
+      config:
+      - subnet: 172.25.0.0/24
