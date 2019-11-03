@@ -26,7 +26,8 @@ def create_user(db):
             "bio": user['bio'],
             "rank": 0,
             "dev_stacks": request.form["dev_stacks"].split(" ")[1:],
-            "contacts": request.form["contacts"]
+            "contacts": request.form["contacts"],
+            "joined_projects": []
         })
 
     return redirect("/mypage")

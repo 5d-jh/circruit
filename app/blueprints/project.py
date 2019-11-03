@@ -80,12 +80,17 @@ def project_detail(user, db, gh_usrname, proj_name):
     
     if project == None:
         return "프로젝트를 찾을 수 없습니다.", 404
+    
+    collaborator_usernames = [
+        collaborator["username"] for collaborator in project["collaborators"]
+    ]
         
     return render_template(
         "project/project_detail.html",
         project=project,
         user=user,
-        is_owner=project["owner"]["username"] == user["username"]
+        is_owner=project["owner"]["username"] == user["username"],
+        is_collaborator=user["username"] in collaborator_usernames
     )
 
 @blueprint.route("/<gh_usrname>/<proj_name>/join")
@@ -105,6 +110,20 @@ def join_project(user, db, gh_usrname, proj_name):
                 }
             }
         )
+
+        db.users.update_one(
+            {
+                "username": user["username"]
+            }, {
+                "$push": {
+                    "joined_projects": {
+                        "name": f"{gh_usrname}/{proj_name}",
+                        "status": "recruiting"
+                    }
+                }
+            }
+        )
+
         return redirect(f"/project/{gh_usrname}/{proj_name}")
     except:
         return "프로젝트에 참여하는 과정에서 오류가 발생했습니다.", 503

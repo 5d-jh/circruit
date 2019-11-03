@@ -72,7 +72,9 @@
                 <a href="/project/{{project.owner.username}}/{{project.name}}/join" class="btn btn-secondary">프로젝트 완료</a>
             {% endif %}
             {% block project_detail_body %}
-                <a href="{{project.name}}/todo" class="btn btn-info">To-Do</a>
+                {% if is_collaborator %}
+                    <a href="{{project.name}}/todo" class="btn btn-info">To-Do</a>
+                {% endif %}
             {% endblock %}
         </div>
     </div>
