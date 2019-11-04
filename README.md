@@ -1,10 +1,12 @@
 # Circruit
 개발 팀원 모집 서비스 (숭실대 소프트웨어학부 소프트웨어 공모전)
 
+[Docker Hub](https://cloud.docker.com/repository/docker/subacc09/circruit_flask)
+
 ## 구현사항
  - [x] GitHub 계정 연동
- - [ ] 사용자 평점 기능
- - [ ] 관심사 기반 피드
+ - [x] 사용자 평점 기능
+ - [x] 관심사 기반 피드
 
 ## 개발 시작하기 전에
 **에디터: vscode, 파이썬: 3.7**
