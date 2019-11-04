@@ -13,7 +13,7 @@ def get_gh_user_info():
     else:
         None
 
-def get_gh_projects_info(username):
+def get_gh_projects_info():
     resp = github.get(f"/user/repos")
     if resp.ok:
         return resp.json()

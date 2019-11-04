@@ -5,20 +5,21 @@ from functools import wraps
 from pymongo import MongoClient
 from api_func import get_gh_user_info
 
-def auth_required(f):
-    @wraps(f)
+mongo_client = MongoClient(os.environ["DATABASE_URL"])
+db = mongo_client.circruit
+
+def auth_required(fn):
+    @wraps(fn)
     def decorated(*args, **kwargs):
         if not github.authorized:
             return redirect("/user/login")
 
-        github.get("/user").json()
-
-        mongo_client = MongoClient(os.environ["DATABASE_URL"])
-        db = mongo_client.circruit
-
         user = db.users.find_one({
             "username": get_gh_user_info()["login"]
         })
+
+        if user == None:
+            return redirect("/user/login")
 
         rank_class_idx = int(user["rank"] // 250)
         icon_filename = ""
@@ -38,6 +39,6 @@ def auth_required(f):
             "icons": (icon_filename+"small.png", icon_filename+"regular.png", icon_filename+"large.png")
         }
 
-        return f(user=user, *args, **kwargs)
+        return fn(user=user, *args, **kwargs)
     
     return decorated

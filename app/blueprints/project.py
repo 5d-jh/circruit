@@ -19,7 +19,7 @@ def create_project(user, db):
         return render_template(
             "project/submit_project.html",
             user=user,
-            projects=get_gh_projects_info(user["username"]),
+            projects=get_gh_projects_info(),
             devstacks=db.devstacks.find()
         )
     elif request.method == "POST":
@@ -169,7 +169,7 @@ def end_project(user, db, gh_usrname, proj_name):
         }
     )
 
-    return redirect(f"/project/{gh_usrname}/{proj_name}/todo")
+    return redirect(f"/project/{gh_usrname}/{proj_name}")
 
 @blueprint.route("/<gh_usrname>/<proj_name>/todo")
 @auth_required
@@ -265,7 +265,7 @@ def project_todo_vote(user, db, gh_usrname, proj_name):
 def manage_project_todo(db, gh_usrname, proj_name):
     hook_payload = json.loads(request.data)
 
-    if hook_payload["action"] == "opened":
+    if hook_payload["action"] == "ope   ned":
         #Issue가 생성되면 새로운 todo 생성
         db.projects.update_one(
             {

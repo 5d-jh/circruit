@@ -5,9 +5,9 @@ import os
 mongo_client = MongoClient(os.environ["DATABASE_URL"] or "mongodb://localhost")
 db = mongo_client.circruit
 
-def db_required(f):
-    @wraps(f)
+def db_required(fn):
+    @wraps(fn)
     def decorated(*args, **kwargs):
-        return f(db=db, *args, **kwargs)
+        return fn(db=db, *args, **kwargs)
     
     return decorated
