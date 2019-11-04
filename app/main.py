@@ -6,9 +6,8 @@ from flask_dance.contrib.github import make_github_blueprint, github
 from pymongo import MongoClient
 from blueprints import user, project
 from blueprints.modules.api_func import get_gh_user_info
-from blueprints.modules import auth_required
+from blueprints.modules import auth_required, db_required, api_func
 from modules import display_rank
-from blueprints.modules import auth_required, db_required
 
 mongo_client = MongoClient(os.environ["DATABASE_URL"])
 db = mongo_client.circruit
@@ -35,8 +34,7 @@ def index():
 @app.route("/mypage")
 @auth_required
 @db_required
-def my_page(user,db):
-    projects=db.projects.find({})
+def my_page(user, db):
     section = request.args.get("section")
 
     rank, point = display_rank(user["rank"])
@@ -47,7 +45,7 @@ def my_page(user,db):
         section=section,
         rank_title=user["display_rank"]["rank_title"],
         exp=user["display_rank"]["exp"],
-        projects=projects
+        projects=api_func.get_gh_projects_info(user["username"])
     )
 
 app.register_blueprint(user.blueprint, url_prefix="/user")
