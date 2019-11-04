@@ -299,7 +299,7 @@ def project_todo_vote(user, db, gh_usrname, proj_name):
 def manage_project_todo(db, gh_usrname, proj_name):
     hook_payload = json.loads(request.data)
 
-    if hook_payload["action"] == "ope   ned":
+    if hook_payload["action"] == "opened":
         #Issue가 생성되면 새로운 todo 생성
         db.projects.update_one(
             {
