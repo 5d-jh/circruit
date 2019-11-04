@@ -54,11 +54,10 @@
                     </div>
                 </div>
             </div>
-
             <div id="project-github-link">
                 <img src="/static/img/github-icon.png">
                 <span>
-                    <a href="http://github.com/{{project.owner.username}}/{{project.name}}">http://github.com/{{project.owner.username}}/{{project.name}}</a>
+                    <a href="http://220.230.122.142:5080/{{project.owner.username}}/{{project.name}}">http://github.com/{{project.owner.username}}/{{project.name}}</a>
                 </span>
             </div>
             <div id="project-github-link">
@@ -67,7 +66,7 @@
         </div>
         
         <div class="project-detail-body">
-            {% if is_owner and project.status == "recruiting" %}
+            {% if is_owner and project.status != "end" %}
                 <a href="/project/{{project.owner.username}}/{{project.name}}/end" class="btn btn-secondary">프로젝트 완료</a>
             {% endif %}
             {% block project_detail_body %}
@@ -75,6 +74,20 @@
                     <a href="{{project.name}}/todo" class="btn btn-info">To-Do</a>
                 {% endif %}
             {% endblock %}
+            <div>
+                {% if is_owner %}
+                    <h3>사용자 승인하기</h3>
+                    <ul>
+                        {% for collaborator in project.collaborators %}
+                            {% if collaborator.stauts == "pending" %}
+                                <li><a href="/project/{{project.owner.username}}/{{project.name}}/approve?username={{collaborator.username}}">{{collaborator.username}}</a> ({{collaborator.contacts}})</li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            
+            
         </div>
     </div>
 {% endblock %}

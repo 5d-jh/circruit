@@ -27,6 +27,7 @@ def create_project(user, db, repo_name):
             return "Data is missing", 400
 
         user["project_rank"] = 0
+        user["status"] = "approved"
 
         db.projects.update_one(
             {
@@ -81,9 +82,10 @@ def project_detail(user, db, gh_usrname, proj_name):
     if project == None:
         return "프로젝트를 찾을 수 없습니다.", 404
     
-    collaborator_usernames = [
-        collaborator["username"] for collaborator in project["collaborators"]
-    ]
+    collaborator_usernames = []
+    for collaborator in project["collaborators"]:
+        if collaborator or collaborator["status"] == "approved":
+            collaborator_usernames.append(collaborator["username"])
         
     return render_template(
         "project/project_detail.html",
@@ -98,6 +100,7 @@ def project_detail(user, db, gh_usrname, proj_name):
 @db_required
 def join_project(user, db, gh_usrname, proj_name):
     user["project_rank"] = 0
+    user["status"] = "pending"
 
     try:
         db.projects.update_one(
@@ -128,6 +131,29 @@ def join_project(user, db, gh_usrname, proj_name):
     except:
         return "프로젝트에 참여하는 과정에서 오류가 발생했습니다.", 503
 
+@blueprint.route("/<gh_usrname>/<proj_name>/approve")
+@auth_required
+@db_required
+def chstatus(user, db, gh_usrname, proj_name):
+    username = request.args.get("username")
+
+    if username == None:
+        return "참여자가 존재하지 않습니다.", 404
+
+    db.projects.update_one(
+        {
+            "name": proj_name,
+            "owner.username": gh_usrname,
+            "collaborators.username": username
+        }, {
+            "$set": {
+                "collaborators.$.status": "approved"
+            }
+        }
+    )
+
+    return redirect(url_for("project.project_detail", gh_usrname=gh_usrname, proj_name=proj_name))
+
 @blueprint.route("/<gh_usrname>/<proj_name>/end")
 @auth_required
 @db_required
@@ -143,13 +169,21 @@ def end_project(user, db, gh_usrname, proj_name):
         return "프로젝트를 찾을 수 없습니다.", 404
 
     if project["owner"]["username"] != user["username"]:
-        return "프로젝트를 마칠 권환이 없습니다.", 403
+        return "프로젝트를 마칠 권한이 없습니다.", 403
+
+    approved_usernames = []
+    for collaborator in project["collaborators"]:
+        if collaborator or collaborator["status"] == "approved":
+            approved_usernames.append(collaborator["username"])
     
     for todo in project["todos"]:
+        assignee_usernames = [assignee["username"] for assignee in todo["assignees"]]
+        filter(lambda username: username in approved_usernames, assignee_usernames)
+
         db.users.update_many(
             {
                 "username": {
-                    "$in": [assignee["username"] for assignee in todo["assignees"]]
+                    "$in": assignee_usernames
                 }
             }, {
                 "$inc": {
