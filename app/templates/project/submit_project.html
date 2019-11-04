@@ -2,30 +2,12 @@
 
 {% block main_content %}
     <div class="container" style="text-align: left;">
-        <form action="/project/create" method="post">
+        <form action="/project/create/{{project_name}}" method="post">
             <div class="form-group">
-                <input type="hidden" name="name" id="repo-name">
                 <input type="hidden" name="proj_stacks" id="proj-stacks">
                 <div class="row">
                     <div class="col-sm">
-                        <h2 style="text-align: left;">1. 프로젝트 선택</h2>
-                        <div class="list-group-wrap" style="max-height: 450px; overflow-y: scroll;">
-                            <div class="list-group">
-                                {% for project in projects %}
-                                    <button type="button" value="{{project.name}}" class="list-group-item list-group-item-action project-btn" name="project" style="text-align: left;">
-                                        <h5 class="mb-1">{{project.name}}</h5>
-                                        {% if project.description %}
-                                            <p class="mb-1">{{project.description}}</p>
-                                        {% else %}
-                                            <i class="mb-1">프로젝트 설명이 없습니다.</i>
-                                        {% endif %}
-                                    </button>
-                                {% endfor %}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm">
-                        <h2 style="text-align: left;">2. 개발 스택 선택</h2>
+                        <h2 style="text-align: left;">{{project_name}} 프로젝트에서 사용하는 개발 스택을 선택하세요</h2>
                         <div class="list-group-wrap" style="max-height: 450px; overflow-y: scroll;">
                             <div class="list-group">
                                 {% for devstack in devstacks %}
@@ -41,16 +23,6 @@
             <input type="submit" class="btn btn-primary" name="proj_stacks" id="proj-stacks" value="프로젝트 생성하기">
         </form>
         <script>
-            $("#proj-stacks").val("")
-
-            $(".project-btn").click(function () {
-                $(".project-btn").removeClass("active");
-                $(this).addClass("active");
-                $("#repo-name").val(
-                    $(this).val()
-                );
-            });
-
             $(".devstack-btn").click(function () {
                 this.disabled = true;
 

@@ -11,29 +11,29 @@ import copy
 
 blueprint = Blueprint('project', __name__)
 
-@blueprint.route("/create", methods=['GET', 'POST'])
+@blueprint.route("/create/<repo_name>", methods=['GET', 'POST'])
 @auth_required
 @db_required
-def create_project(user, db):
+def create_project(user, db, repo_name):
     if request.method == "GET":
         return render_template(
             "project/submit_project.html",
             user=user,
-            projects=get_gh_projects_info(),
+            project_name=repo_name,
             devstacks=db.devstacks.find()
         )
     elif request.method == "POST":
-        if len(request.form["name"]) == 0 or len(request.form["proj_stacks"]) == 0:
+        if len(request.form["proj_stacks"]) == 0:
             return "Data is missing", 400
 
         user["project_rank"] = 0
 
         db.projects.update_one(
             {
-                "name": request.form["name"]
+                "name": repo_name
             }, {
                 "$set": {
-                    "name": request.form["name"],
+                    "name": repo_name,
                     "rank": user["rank"],
                     "status": "recruiting",
                     "proj_stacks": request.form["proj_stacks"].split(" ")[1:],

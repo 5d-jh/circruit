@@ -14,7 +14,8 @@ def get_gh_user_info():
         None
 
 def get_gh_projects_info():
-    resp = github.get(f"/user/repos")
+    resp = github.get("/user/repos?affiliation=owner")
+    json_data = resp.json()
     if resp.ok:
         return resp.json()
     else:

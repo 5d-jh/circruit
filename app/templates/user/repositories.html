@@ -1,10 +1,24 @@
-<div id="repository">
+<style>
+    .card {
+        margin-bottom: 15px;
+    }
+</style>
+<div class="my-projects">
     {% for project in projects %}
-        <div class="layer">
-            <h3>{{project.name}}</h3> <!--프로젝트 명이 나오지 않음-->
-            {% if project.description %}
-                <p>{{project.description}}</p>
-            {% endif %}
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title text-left">
+                    {{project.name}}
+                </h5>
+                {% if project.description %}
+                    <p class="card-text text-left">
+                        {{project.description}}
+                    </p>
+                {% endif %}
+                <div class="text-left">
+                    <a href="/project/create/{{project.name}}" class="card-link">프로젝트 생성</a>
+                </div>
+            </div>
         </div>
     {% endfor %}
 </div>

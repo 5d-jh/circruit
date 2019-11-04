@@ -43,4 +43,4 @@ app.register_blueprint(user.blueprint, url_prefix="/user")
 app.register_blueprint(project.blueprint, url_prefix="/project")
 
 if __name__ == "main":
-    app.run()
+    app.run(port=5000)
