@@ -1,12 +1,12 @@
 <style>
     @import url("/static/css/project-history.css");
 </style>
-<div class="list-group list-group-flush text-left">
+<div id="history">
     {% for joined_project in user.joined_projects %}
-        <li class="list-group-item">
+        <div class="history-detail">
             <h5>
                 <a href="/project/{{joined_project.name}}" target="_blank" rel="noopener noreferrer">{{joined_project.name}}</a>
             </h5>
-        </li>
+        </div>
     {% endfor %}
 </div>

@@ -8,7 +8,7 @@
                 <div class="row">
                     <div class="col-sm">
                         <h2 style="text-align: left;">{{project_name}} 프로젝트에서 사용하는 개발 스택을 선택하세요</h2>
-                        <div class="list-group-wrap" style="max-height: 450px; overflow-y: scroll;">
+                        <div class="list-group-wrap" style="max-height: 450px; overflow-y: scroll; margin-top: 30px;">
                             <div class="list-group">
                                 {% for devstack in devstacks %}
                                     <button type="button" value="{{devstack.name}}" class="list-group-item list-group-item-action devstack-btn" name="devstack" style="text-align: left;">
@@ -20,7 +20,7 @@
                     </div>
                 </div>
             </div>
-            <input type="submit" class="btn btn-primary" name="proj_stacks" id="proj-stacks" value="프로젝트 생성하기">
+            <input type="submit" class="btn btn-primary" name="proj_stacks" id="proj-stacks" style="margin-top: 20px;" value="프로젝트 생성하기">
         </form>
         <script>
             $(".devstack-btn").click(function () {

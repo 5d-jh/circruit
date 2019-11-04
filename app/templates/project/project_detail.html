@@ -60,8 +60,10 @@
                     <a href="https://github.com/{{project.owner.username}}/{{project.name}}">github.com/{{project.owner.username}}/{{project.name}}</a>
                 </span>
             </div>
-            <div id="project-github-link">
-                <span class="badge badge-secondary">Webhook</span> <span class="badge badge-secondary">application/json</span> http://220.230.122.142:5080/project/{{project.owner.username}}/{{project.name}}/hook
+            <div id="project-webhook">
+                <span class="badge badge-secondary">Webhook</span>
+                <span class="badge badge-secondary">application/json</span>
+                http://220.230.122.142:5080/project/{{project.owner.username}}/{{project.name}}/hook
             </div>
         </div>
         
@@ -74,13 +76,16 @@
                     <a href="{{project.name}}/todo" class="btn btn-info">To-Do</a>
                 {% endif %}
             {% endblock %}
-            <div>
+            <div id="permission">
                 {% if is_owner %}
                     <h3>사용자 승인하기</h3>
                     <ul>
                         {% for collaborator in project.collaborators %}
                             {% if collaborator.status == "pending" %}
-                                <li><a href="/project/{{project.owner.username}}/{{project.name}}/approve?username={{collaborator.username}}">{{collaborator.username}}</a> ({{collaborator.contacts}})</li>
+                                <li>
+                                    <img src="{{collaborator.avatar_url}}">
+                                    <a href="/project/{{project.owner.username}}/{{project.name}}/approve?username={{collaborator.username}}">{{collaborator.username}}</a> ({{collaborator.contacts}})
+                                </li>
                             {% endif %}
                         {% endfor %}
                     </ul>

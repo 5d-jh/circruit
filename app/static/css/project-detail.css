@@ -25,6 +25,12 @@
     width: 30px;
     height: 30px;
 }
+#project-webhook {
+    padding: 7px 0;
+    text-align: left;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.3);
+}
+
 .project-detail-member {
     margin-top: 10px;
     margin-bottom: 20px;
@@ -66,4 +72,25 @@
 .participant-profile-image img{
     height: 30px;
     width: 30px;
+}
+
+#permission {
+    margin-top: 15px;
+    text-align: center;
+}
+
+#permission ul {
+    margin-top: 15px;
+    padding: 0;
+    list-style: none;
+}
+
+#permission ul li {
+    padding-bottom: 10px;
+}
+
+#permission ul li img {
+    height: 30px;
+    width: 30px;
+    margin-right: 3px;
 }

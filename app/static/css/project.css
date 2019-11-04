@@ -23,13 +23,6 @@
     font-size: 36px;
     font-weight: bold;
 }
-.project-date {
-    font-family: 'Nanum Square';
-    margin-left: 4px;
-    text-align: left;
-    font-size: 14px;
-    margin-top: 3px;
-}
 .project-date span {
     margin-right: 25px;
 }
@@ -78,11 +71,15 @@
     height: 12px;
     transform: translateY(-50%);
     border-radius: 50%;
+    border: 2px solid gray;
     background: green;
 }
 
 .timeline ol li:nth-last-child(2) {
+    width: 850px; 
+    /*
     width: 150px;
+    */
 }
 
 .timeline ol li:nth-last-child(2)::after {
@@ -91,15 +88,16 @@
     top: 50%;
     left: calc(100% + 1px);
     bottom: 0;
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     transform: translateY(-50%);
     border-radius: 50%;
-    background: green;
+    border: 2px solid gray;
+    background: white;
 }
 
 .timeline ol li:nth-last-child(1) {
-    margin-left: 32px;
+    margin-left: 42px;
 }
 
 .timeline ol li div {
@@ -114,6 +112,97 @@
 }
 
 .timeline ol li:nth-last-child(2) div {
+    left: 99%;
+    /*
+    원래 95%
+    */
+    top: 30px;
+}
+
+/*
+원래 없음
+*/
+.timeline ol li:last-child {
+    width: 30px;
+}
+
+.timeline2 {
+    white-space: nowrap;
+    overflow-x: hidden;
+    text-align: center;
+}
+
+.timeline2 ol {
+    font-size: 0;
+    width: 1048px;
+    padding: 110px 0;
+}
+
+.timeline2 ol li {
+    position: relative;
+    display: inline-block;
+    list-style-type: none;
+    width: 74px;
+    height: 3px;
+    background: black;
+}
+
+.timeline2 ol li:not(:first-child) {
+    margin-left: 14px;
+}
+
+.timeline2 ol li:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: calc(100% + 1px);
+    bottom: 0;
+    width: 12px;
+    height: 12px;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    border: 2px solid gray;
+    background: green;
+}
+
+.timeline2 ol li:nth-last-child(2) {
+    width: 150px;
+}
+
+.timeline2 ol li:nth-last-child(2)::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: calc(100% + 1px);
+    bottom: 0;
+    width: 40px;
+    height: 40px;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    border: 2px solid gray;
+    background: white;
+}
+
+.timeline2 ol li:nth-last-child(1) {
+    margin-left: 42px;
+}
+
+.timeline2 ol li div {
+    font-family: 'Nanum Square';
+    text-align: center;
+    position: absolute;
+    left: 75%;
+    width: 50px;
+    font-size: 1rem;
+    color: black;
+    top: 15px;
+}
+
+.timeline2 ol li:nth-last-child(2) div {
     left: 95%;
     top: 30px;
+}
+
+.timeline2 ol li:last-child {
+    width: 30px;
 }
